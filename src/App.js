@@ -50,6 +50,7 @@ function App() {
         <Subjectstable
           settableofsubjects={settableofsubjects}
           tableofsubjects={tableofsubjects}
+          setsubjects={setsubjects}
         />
       )}
       {issectionallotted && (
@@ -63,7 +64,14 @@ function App() {
         />
       )}
       {isfacultyalloted && (
-        <Facultytable facultyarraytable={facultyarraytable} />
+        <Facultytable
+          facultyarraytable={facultyarraytable}
+          setfacultyarraytable={setfacultyarraytable}
+          faculty={faculty}
+          setfaculty={setfaculty}
+          facultytimings={facultytimings}
+          setfacultytimings={setfacultytimings}
+        />
       )}
       {issubjectsallocated && (
         <Facultyrendering

@@ -44,14 +44,14 @@ function Subjectrendering({
           <input
             type="text"
             id="duration"
-            value={duration}
+            value={isNaN(duration) ? "" : duration}
             onChange={(e) => setduration(parseInt(e.target.value), 10)}
           />
           <label htmlFor="occurences">Occurences</label>
           <input
             type="text"
             id="occurences"
-            value={occurences}
+            value={isNaN(occurences) ? "" : occurences}
             onChange={(e) => setoccurences(parseInt(e.target.value), 10)}
           />
           <div className="button-group">

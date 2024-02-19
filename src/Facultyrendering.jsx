@@ -46,19 +46,19 @@ function Facultyrendering({
       return updatedtimings;
     });
     let newArray5 = [facultyname, sub, sec];
-    setfacultyarraytable((...prevtable) => [...prevtable, newArray5]);
+    setfacultyarraytable((prevtable) => [...prevtable, newArray5]);
     setisfacultyalloted(true);
     (() => {
       setfacultyname("");
       setsub("");
       setsec("");
     })();
-    console.log("Faculty Array table is ", facultyarraytable);
   }
   useEffect(() => {
     console.log("After updated", faculty);
     console.log("After updated faculty timings", facultytimings);
-  }, [faculty, facultytimings]); // This useEffect will run whenever the faculty state changes
+    console.log("Faculty Array table is ", facultyarraytable);
+  }, [faculty, facultytimings, facultyarraytable]); // This useEffect will run whenever the faculty state changes
 
   function handleFinish(e) {
     setisnofaculty(!isnofaculty);

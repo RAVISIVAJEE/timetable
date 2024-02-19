@@ -1,4 +1,13 @@
-function Subjectstable({ tableofsubjects }) {
+function Subjectstable({ tableofsubjects, settableofsubjects, setsubjects }) {
+  function handleDelete(e, value) {
+    e.preventDefault();
+    settableofsubjects(tableofsubjects.filter((ele) => ele[0] !== value));
+    setsubjects((prevsubjects) => {
+      const updatedSubjects = { ...prevsubjects };
+      delete updatedSubjects[value];
+      return updatedSubjects;
+    });
+  }
   return (
     <table>
       <thead>
@@ -14,6 +23,7 @@ function Subjectstable({ tableofsubjects }) {
             <td>{ele[0]}</td>
             <td>{ele[1]}</td>
             <td>{ele[2]}</td>
+            <button onClick={(e) => handleDelete(e, ele[0])}>Delete</button>
           </tr>
         ))}
       </tbody>

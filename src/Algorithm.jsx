@@ -10,7 +10,11 @@ function Algorithm(subjects, setdisplayingtimetable, displayingtimetable) {
     5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.3, 6.4,
   ];
   const nonlabtimings = [1.4, 1.7, 2.4, 2.7, 3.4, 3.7, 4.4, 4.7, 5.4, 5.7, 6.4];
-  let dupt = Timings;
+  //let dupt = Timings;
+  let AvailbleTimings = {};
+  for (const j of sections) {
+    AvailbleTimings[j] = Timings;
+  }
   console.log("The sections in Algorithm.jsx is", sections);
   console.log("The courses in Algorithm.jsx is", courses);
   console.log("The faculty in Algorithm.jsx is", faculty);
@@ -46,7 +50,7 @@ function Algorithm(subjects, setdisplayingtimetable, displayingtimetable) {
           let p = 0;
           while (p < 1) {
             console.log("p value in classes is ", p);
-            let temp = randompicker(dupt);
+            let temp = randompicker(AvailbleTimings[s]);
             if (!nonlabtimings.includes(temp)) {
               let newArray2 = [];
               newArray2.push(temp);
@@ -71,7 +75,9 @@ function Algorithm(subjects, setdisplayingtimetable, displayingtimetable) {
                 " after Assigning the lab  facultytimings",
                 sectiontimings
               );
-              dupt = dupt.filter((el) => el !== temp + 0.1);
+              AvailbleTimings[s] = AvailbleTimings[s].filter(
+                (el) => el !== temp + 0.1
+              );
               p = p + 1;
             }
           }
@@ -93,7 +99,7 @@ function Algorithm(subjects, setdisplayingtimetable, displayingtimetable) {
             let k = 0;
             while (k < courses[facultyArray[i][0]][1]) {
               console.log("K value in classes", k);
-              let temp = randompicker(dupt);
+              let temp = randompicker(AvailbleTimings[s]);
               let tempfacultyArray = [];
               // dayArray = dupt.map((ele) => Math.floor(ele));
               tempfacultyArray = facultytimings[facultyName].map((ele) =>
@@ -124,12 +130,12 @@ function Algorithm(subjects, setdisplayingtimetable, displayingtimetable) {
                   sectiontimings
                 );
               } else {
-                dupt.push(temp);
+                AvailbleTimings[s].push(temp);
               }
             }
           }
           if (courses[facultyArray[i][0]][1] === 1) {
-            let temp = randompicker(dupt);
+            let temp = randompicker(AvailbleTimings[s]);
             let newArray2 = [];
             newArray2.push(temp);
             newArray2.push(facultyArray[i][0]);
