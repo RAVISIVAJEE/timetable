@@ -7,7 +7,19 @@ import Algorithm from "./Algorithm";
 import Facultytable from "./Facultytable";
 import "./App.css";
 
-function App() {
+function App({
+  facultytimings,
+  setfacultytimings,
+  CollegeTimings,
+  setCollegeTimings,
+  Branch,
+  Year,
+  CollegeSubjects,
+  setCollegeSubjects,
+  setBranch,
+  setYear,
+  setdata,
+}) {
   const [count, setcount] = useState(0);
   const [sections, setsections] = useState([]);
   const [isfacultyalloted, setisfacultyalloted] = useState(false);
@@ -17,11 +29,12 @@ function App() {
   const [tableofsubjects, settableofsubjects] = useState([]);
   const [issubjectsallocated, setissubjectsallocated] = useState(false);
   const [faculty, setfaculty] = useState({});
-  const [facultytimings, setfacultytimings] = useState({});
+  //const [facultytimings, setfacultytimings] = useState({});
   const [sectiontimings, setsectiontimings] = useState({});
   const [displayingtimetable, setdisplayingtimetable] = useState(false);
   //Array.from({ length: count }, () => "hello")
-
+  console.log("in App.jsx CollegeTimings are", CollegeTimings);
+  console.log("in App.jsx setCollegeTimings are", setCollegeTimings);
   function handleCount(e, statefunction, string) {
     e.preventDefault();
     statefunction(parseInt(document.getElementById(`${string}`).value), 10);
@@ -92,12 +105,31 @@ function App() {
       {displayingtimetable && (
         <Algorithm
           subjects={subjects}
+          setsubjects={setsubjects}
           sections={sections}
           faculty={faculty}
           facultytimings={facultytimings}
           sectiontimings={sectiontimings}
+          setsectiontimings={setsectiontimings}
           setdisplayingtimetable={setdisplayingtimetable}
           displayingtimetable={displayingtimetable}
+          CollegeTimings={CollegeTimings}
+          setCollegeTimings={setCollegeTimings}
+          Branch={Branch}
+          Year={Year}
+          CollegeSubjects={CollegeSubjects}
+          setCollegeSubjects={setCollegeSubjects}
+          setcount={setcount}
+          setsections={setsections}
+          setisfacultyalloted={setisfacultyalloted}
+          setissectionalloted={setissectionalloted}
+          setfacultyarraytable={setfacultyarraytable}
+          settableofsubjects={settableofsubjects}
+          setissubjectsallocated={setissubjectsallocated}
+          setfaculty={setfaculty}
+          setBranch={setBranch}
+          setYear={setYear}
+          setdata={setdata}
         />
       )}
     </form>
