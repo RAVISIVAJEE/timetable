@@ -47,23 +47,30 @@ function InfoTable(data, branch, year) {
                   <tr key={ele}>
                     <td>{ele}</td>
                     {Suffix.map((el) => {
-                      console.log("timings are ", timings);
-                      console.log("data[timings[0] is", dataa[timings[0]]);
-                      console.log(
-                        "correspondings[ele] + el",
-                        correspondings[ele] + el
-                      );
-
-                      const filteredData = dataa[timings[0]].filter(
-                        (element) =>
-                          correspondings[ele] + el === element[0].toString()
-                      );
-                      console.log("Filterddata is ", filteredData);
-                      return filteredData.length > 0 ? (
-                        <td key={el}>{filteredData[0][1]}</td>
-                      ) : (
-                        <td key={el}></td>
-                      );
+                      const suffixValue = correspondings[ele] + el;
+                      if (suffixValue.endsWith(".3")) {
+                        return (
+                          <td key={el}>
+                            <p>Break</p>
+                          </td>
+                        );
+                      } else if (suffixValue.endsWith(".6")) {
+                        return (
+                          <td key={el}>
+                            <p>Lunch</p>
+                          </td>
+                        );
+                      } else {
+                        const filteredData = dataa[timings[0]].filter(
+                          (element) => suffixValue === element[0].toString()
+                        );
+                        console.log("Filterddata is ", filteredData);
+                        return filteredData.length > 0 ? (
+                          <td key={el}>{filteredData[0][1]}</td>
+                        ) : (
+                          <td key={el}></td>
+                        );
+                      }
                     })}
                   </tr>
                 ))}
