@@ -1,10 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import "./HomePage.css";
 import Header from "./Header";
-function HomePage({ selectedOption, handleOptionChange }) {
+function HomePage({ setselectedOption, selectedOption, handleOptionChange }) {
   return (
     <div className="Homepage">
-      <Header />
+      <Header
+        selectedOption={selectedOption}
+        setselectedOption={setselectedOption}
+      />
       {/* <p>Please select to enter data for which of the following</p>
       <div className="innerhomepage">
         <label classname="label">

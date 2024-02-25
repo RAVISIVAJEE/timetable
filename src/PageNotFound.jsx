@@ -1,6 +1,7 @@
 import React from "react";
-import "./PageNotFound.css"; // Import CSS file for styling
 import { Link } from "react-router-dom";
+import "./PageNotFound.css"; // Import CSS file for styling
+
 function PageNotFound() {
   return (
     <div className="not-found-container">

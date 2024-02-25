@@ -8,6 +8,10 @@ function SelectTimeTablePage() {
       <Header />
       <h2>Select Time Table</h2>
       <div className="link-container">
+        <NavLink to="/bshtimetable" className="timetable-link">
+          BSH Time Table
+        </NavLink>
+        <p>View the time table of BSH</p>
         <NavLink to="/branchtimetable" className="timetable-link">
           Branch Time Table
         </NavLink>

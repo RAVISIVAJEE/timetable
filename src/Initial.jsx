@@ -8,8 +8,11 @@ import SelectTimeTablePage from "./SelectTimeTablePage";
 import BranchTimeTable from "./BranchTimeTable";
 import AboutPage from "./AboutPage";
 import PageNotFound from "./PageNotFound";
+import BshTimeTable from "./BshTimeTable";
+import FacultyTimeTable from "./FacultyTimeTable";
 function Initial() {
   const [selectedOption, setselectedOption] = useState("");
+
   const [CollegeTimings, setCollegeTimings] = useState({
     BSH: {},
     CSE: { II: {}, III: {}, IV: {} },
@@ -69,6 +72,23 @@ function Initial() {
                 />
               }
             />
+            <Route
+              path="facultytimetable"
+              element={<FacultyTimeTable facultytimings={facultytimings} />}
+            />
+            <Route
+              path="bshtimetable"
+              element={
+                <BshTimeTable
+                  CollegeTimings={CollegeTimings}
+                  setCollegeTimings={setCollegeTimings}
+                  LowerTableData={LowerTableData}
+                  setLowerTableData={setLowerTableData}
+                  selectedOption={selectedOption}
+                  setselectedOption={setselectedOption}
+                />
+              }
+            />
             <Route path="*" element={<PageNotFound />} />
             <Route
               path="branchtimetable"
@@ -78,6 +98,8 @@ function Initial() {
                   setCollegeTimings={setCollegeTimings}
                   LowerTableData={LowerTableData}
                   setLowerTableData={setLowerTableData}
+                  selectedOption={selectedOption}
+                  setselectedOption={setselectedOption}
                 />
               }
             />
@@ -86,6 +108,7 @@ function Initial() {
               path="HomePage"
               element={
                 <HomePage
+                  setselectedOption={setselectedOption}
                   selectedOption={selectedOption}
                   handleOptionChange={handleOptionChange}
                 />
@@ -95,8 +118,12 @@ function Initial() {
               path="Bsh"
               element={
                 <Bsh
+                  selectedOption={selectedOption}
+                  setselectedOption={setselectedOption}
                   CollegeTimings={CollegeTimings}
                   setCollegeTimings={setCollegeTimings}
+                  facultytimings={facultytimings}
+                  setfacultytimings={setfacultytimings}
                   CollegeSubjects={CollegeSubjects}
                   setCollegeSubjects={setCollegeSubjects}
                   LowerTableData={LowerTableData}

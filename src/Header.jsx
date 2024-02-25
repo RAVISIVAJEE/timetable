@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "./Assets/download.png"; // Import the image file
 import "./Header.css"; // Import CSS file for styling
 
-function Header() {
+function Header({ selectedOption, setselectedOption }) {
   const timetableData = {
     BSH: {},
     Branch: {},
@@ -24,7 +24,9 @@ function Header() {
               {Object.keys(timetableData).map((branch) => (
                 <li key={branch}>
                   <NavLink to={`/${branch}`} activeClassName="active">
-                    {branch}
+                    <button onClick={(e) => setselectedOption({ branch })}>
+                      {branch}
+                    </button>
                   </NavLink>
                 </li>
               ))}

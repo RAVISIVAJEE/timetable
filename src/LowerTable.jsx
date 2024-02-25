@@ -1,13 +1,31 @@
-function LowerTable({ Branch, Year, LowerTableData, section }) {
+function LowerTable({
+  Branch,
+  Year,
+  LowerTableData,
+  section,
+  selectedOption,
+  setselectedOption,
+}) {
   // Check if LowerTableData and its nested levels are defined
   console.log("LowerTableData in LowerTable", LowerTableData);
-  if (
-    !LowerTableData ||
-    !LowerTableData[Branch] ||
-    !LowerTableData[Branch][Year] ||
-    !LowerTableData[Branch][Year][section]
-  ) {
-    return <div>No data available</div>;
+  if (selectedOption["branch"] !== "BSH") {
+    if (
+      !LowerTableData ||
+      !LowerTableData[Branch] ||
+      !LowerTableData[Branch][Year] ||
+      !LowerTableData[Branch][Year][section]
+    ) {
+      return <div>No data available</div>;
+    }
+  }
+  if (selectedOption["branch"] === "BSH") {
+    if (
+      !LowerTableData ||
+      !LowerTableData["BSH"] ||
+      !LowerTableData["BSH"][section]
+    ) {
+      return <div>No data available</div>;
+    }
   }
 
   return (
@@ -21,15 +39,30 @@ function LowerTable({ Branch, Year, LowerTableData, section }) {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(LowerTableData[Branch][Year][section]).map(
-            ([courseTitle, faculty], index) => (
-              <tr key={courseTitle}>
-                <td>{index + 1}</td>
-                <td>{courseTitle}</td>
-                <td>{faculty}</td>
-              </tr>
-            )
+          {console.log(
+            "The selectedOption[branch] in lower table is ",
+            selectedOption["branch"]
           )}
+          {selectedOption["branch"] === "BSH" &&
+            Object.entries(LowerTableData["BSH"][section]).map(
+              ([courseTitle, faculty], index) => (
+                <tr key={courseTitle}>
+                  <td>{index + 1}</td>
+                  <td>{courseTitle}</td>
+                  <td>{faculty}</td>
+                </tr>
+              )
+            )}
+          {selectedOption["branch"] !== "BSH" &&
+            Object.entries(LowerTableData[Branch][Year][section]).map(
+              ([courseTitle, faculty], index) => (
+                <tr key={courseTitle}>
+                  <td>{index + 1}</td>
+                  <td>{courseTitle}</td>
+                  <td>{faculty}</td>
+                </tr>
+              )
+            )}
         </tbody>
       </table>
     </div>

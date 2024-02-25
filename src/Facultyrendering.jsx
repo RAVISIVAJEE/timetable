@@ -17,6 +17,8 @@ function Facultyrendering({
   setLowerTableData,
   Branch,
   Year,
+  selectedOption,
+  setselectedOption,
 }) {
   const [facultyname, setfacultyname] = useState("");
   const [sub, setsub] = useState("");
@@ -60,7 +62,7 @@ function Facultyrendering({
     setfacultyarraytable((prevtable) => [...prevtable, newArray5]);
 
     // Update LowerTableData
-    if (LowerTableData) {
+    if (LowerTableData && selectedOption["branch"] !== "BSH") {
       setLowerTableData((prevdata) => {
         const updatedData = { ...prevdata };
         if (!updatedData[Branch]) {
@@ -73,6 +75,18 @@ function Facultyrendering({
           updatedData[Branch][Year][sec] = {};
         }
         updatedData[Branch][Year][sec][sub] = facultyname;
+        return updatedData;
+      });
+    } else {
+      setLowerTableData((prevdata) => {
+        const updatedData = { ...prevdata };
+        if (!updatedData["BSH"]) {
+          updatedData["BSH"] = {};
+        }
+        if (!updatedData["BSH"][sec]) {
+          updatedData["BSH"][sec] = {};
+        }
+        updatedData["BSH"][sec][sub] = facultyname;
         return updatedData;
       });
     }

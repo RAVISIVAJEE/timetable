@@ -21,6 +21,8 @@ function App({
   setdata,
   LowerTableData,
   setLowerTableData,
+  selectedOption,
+  setselectedOption,
 }) {
   const [count, setcount] = useState(0);
   const [sections, setsections] = useState([]);
@@ -109,6 +111,8 @@ function App({
           setLowerTableData={setLowerTableData}
           Branch={Branch}
           Year={Year}
+          selectedOption={selectedOption}
+          setselectedOption={setselectedOption}
         />
       )}
       {displayingtimetable && (
@@ -139,6 +143,8 @@ function App({
           setBranch={setBranch}
           setYear={setYear}
           setdata={setdata}
+          selectedOption={selectedOption}
+          setselectedOption={setselectedOption}
         />
       )}
     </form>

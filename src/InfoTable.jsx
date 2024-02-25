@@ -1,5 +1,8 @@
+import Header from "./Header";
 import LowerTable from "./LowerTable";
 function InfoTable(data) {
+  const selectedOption = data["selectedOption"];
+  const setselectedOption = data["setselectedOption"];
   const dataa = data["data"];
   const LowerTableData = data["LowerTableData"];
   const branch = data["branch"];
@@ -23,6 +26,7 @@ function InfoTable(data) {
   console.log("Entered into INFO table", data);
   return (
     <>
+      <Header />
       <div>
         {Object.entries(dataa).map((timings, index) => (
           <>
@@ -91,6 +95,8 @@ function InfoTable(data) {
               LowerTableData={LowerTableData}
               setLowerTableData={LowerTableData}
               section={timings[0]}
+              selectedOption={selectedOption}
+              setselectedOption={setselectedOption}
             />
           </>
         ))}
