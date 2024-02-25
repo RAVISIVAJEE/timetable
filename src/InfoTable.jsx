@@ -1,6 +1,9 @@
-function InfoTable(data) {
+function InfoTable(data, branch, year) {
+  const dataa = data["data"];
+  const branch1 = branch;
+  const year1 = year;
   const weeks = ["MON", "TUE", "WED", "THUR", "FRI", "SAT"];
-  const Suffix = ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"];
+  const Suffix = [".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9"];
   const correspondings = {
     MON: "1",
     TUE: "2",
@@ -9,39 +12,64 @@ function InfoTable(data) {
     FRI: "5",
     SAT: "6",
   };
-  console.log("Entered into INFO table");
+  console.log("Entered into INFO table", data);
   return (
     <>
       <div>
-        {Object.entries(data).map((timings, index) => (
-          <table key={index} border="1">
-            <thead>
-              <tr>
-                <th>Timing</th>
-                <th>9:00 AM to 10:00 AM</th>
-                <th>10:00 AM to 11:00 AM</th>
-                <th>11:00 AM to 11:10 AM</th>
-                <th>11:10 AM to 12:10 PM</th>
-                <th>12:10 PM to 1:10 PM</th>
-                <th>2:00 PM to 3:00 PM</th>
-                <th>3:00 PM to 4:00 PM</th>
-                <th>4:00 PM to 5:00 PM</th>
-              </tr>
-            </thead>
-            <tbody>
-              {weeks.map((ele) => (
-                <tr key={ele}>
-                  <td>{ele}</td>
-                  {Suffix.map((el) => {
-                    const filteredData = data[timings[0]].filter(
-                      (element) => correspondings[ele] + el === element[0]
-                    );
-                    return <td key={el}>{filteredData}</td>;
-                  })}
+        {Object.entries(dataa).map((timings, index) => (
+          <>
+            <section>
+              <h3>CLASS TIME TABLE</h3>
+              <br />
+              <label>Department:</label>
+              <br />
+              <label>Academic Year :2023-24</label>
+              <br />
+              <label>Section :{timings[0]}</label>
+            </section>
+            <table key={index} border="1">
+              <thead>
+                <tr>
+                  <th>Timing</th>
+                  <th>9:00 AM to 10:00 AM</th>
+                  <th>10:00 AM to 11:00 AM</th>
+                  <th>11:00 AM to 11:10 AM</th>
+                  <th>11:10 AM to 12:10 PM</th>
+                  <th>12:10 PM to 1:10 PM</th>
+                  <th>1:10 PM to 2:00 PM</th>
+                  <th>2:00 PM to 3:00 PM</th>
+                  <th>3:00 PM to 4:00 PM</th>
+                  <th>4:00 PM to 5:00 PM</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {weeks.map((ele) => (
+                  <tr key={ele}>
+                    <td>{ele}</td>
+                    {Suffix.map((el) => {
+                      console.log("timings are ", timings);
+                      console.log("data[timings[0] is", dataa[timings[0]]);
+                      console.log(
+                        "correspondings[ele] + el",
+                        correspondings[ele] + el
+                      );
+
+                      const filteredData = dataa[timings[0]].filter(
+                        (element) =>
+                          correspondings[ele] + el === element[0].toString()
+                      );
+                      console.log("Filterddata is ", filteredData);
+                      return filteredData.length > 0 ? (
+                        <td key={el}>{filteredData[0][1]}</td>
+                      ) : (
+                        <td key={el}></td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
         ))}
       </div>
     </>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Header from "./Header";
 import InfoTable from "./InfoTable";
-function BranchTimeTable(props) {
-  const { CollegeTimings, setCollegeTimings } = props;
+function BranchTimeTable({ CollegeTimings, setCollegeTimings }) {
+  //const CollegeTimings = CollegeTimings["CollegeTimings"];
   const names = ["CSE", "ECE", "EEE", "IT", "CIVIL", "MECH"];
   const Yearss = ["II", "III", "IV"];
   const [Branchh, setBranchh] = useState("");
@@ -65,7 +65,7 @@ function BranchTimeTable(props) {
       </div>
       {console.log("todisplay is", todisplay)}
       {console.log("Branchh and Yearr is", Branchh, Yearr)}
-      {console.log("College TImings are", CollegeTimings["CollegeTimings"])}
+      {console.log("College TImings are", CollegeTimings)}
       {/* {console.log(
         "CollegeTimings[Branchh][Yearr]",
         CollegeTimings[Branchh][Yearr]
@@ -76,7 +76,11 @@ function BranchTimeTable(props) {
         Yearr &&
         CollegeTimings[Branchh] &&
         CollegeTimings[Branchh][Yearr] && (
-          <InfoTable data={CollegeTimings[Branchh][Yearr]} />
+          <InfoTable
+            data={CollegeTimings[Branchh][Yearr]}
+            branch={Branchh}
+            year={Yearr}
+          />
         )}
     </>
   );

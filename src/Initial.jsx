@@ -1,6 +1,5 @@
-//import App from "./App";
 import { useState, useEffect } from "react";
-import Header from "./Header";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Bsh from "./Bsh";
 import Branch from "./Branch";
@@ -30,12 +29,12 @@ function Initial() {
   const [facultytimings, setfacultytimings] = useState({});
   //const [isbuttonClicked, setisbuttonClicked] = useState(false);
 
-  useEffect(
-    function () {
-      console.log("College timings are", CollegeTimings);
-    },
-    [CollegeTimings]
-  );
+  // useEffect(
+  //   function () {
+  //     console.log("College timings are in USeEffect", CollegeTimings);
+  //   },
+  //   [CollegeTimings]
+  // );
 
   function handleOptionChange(e) {
     setselectedOption(e.target.value);

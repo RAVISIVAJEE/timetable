@@ -1,5 +1,5 @@
 //import { Link } from "react-router-dom";
-import { useEffect } from "react";
+
 function Algorithm(subjects) {
   const courses = subjects["subjects"];
   const setcount = subjects["setcount"];
@@ -28,15 +28,23 @@ function Algorithm(subjects) {
   //console.log("in Algorithm.jsx CollegeTimings are", CollegeTimings);
   console.log("in Algorithm.jsx setCollegeTimings are", setCollegeTimings);
   function handleAllocation(e) {
+    // const Timings = [
+    //   1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.1,
+    //   3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 5.1, 5.2,
+    //   5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.3, 6.4,
+    // ];
     const Timings = [
-      1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.1,
-      3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 5.1, 5.2,
-      5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.3, 6.4,
+      1.1, 1.2, 1.4, 1.5, 1.7, 1.8, 1.9, 2.1, 2.2, 2.4, 2.5, 2.7, 2.8, 2.9, 3.1,
+      3.2, 3.4, 3.5, 3.7, 3.8, 3.9, 4.1, 4.2, 4.4, 4.5, 4.7, 4.8, 4.9, 5.1, 5.2,
+      5.4, 5.5, 5.7, 5.8, 5.9, 6.1, 6.2, 6.4, 6.5,
     ];
-    const nonlabtimings = [
-      1.4, 1.7, 2.4, 2.7, 3.4, 3.7, 4.4, 4.7, 5.4, 5.7, 6.4,
-    ];
+    // const nonlabtimings = [
+    //   1.4, 1.7, 2.4, 2.7, 3.4, 3.7, 4.4, 4.7, 5.4, 5.7, 6.4,
+    // ];
     //let dupt = Timings;
+    const nonlabtimings = [
+      1.5, 1.9, 2.5, 2.9, 3.5, 3.9, 4.5, 4.9, 5.5, 5.9, 6.5,
+    ];
     let AvailbleTimings = {};
     for (const j of sections) {
       AvailbleTimings[j] = Timings;
