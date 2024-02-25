@@ -1,5 +1,10 @@
-function InfoTable(data, branch, year) {
+import LowerTable from "./LowerTable";
+function InfoTable(data) {
   const dataa = data["data"];
+  const LowerTableData = data["LowerTableData"];
+  const branch = data["branch"];
+  const year = data["year"];
+  const setLowerTableData = data["setLowerTableData"];
   const branch1 = branch;
   const year1 = year;
   const weeks = ["MON", "TUE", "WED", "THUR", "FRI", "SAT"];
@@ -76,6 +81,14 @@ function InfoTable(data, branch, year) {
                 ))}
               </tbody>
             </table>
+            {console.log("Lower table data in Info table", LowerTableData)}
+            <LowerTable
+              Branch={branch1}
+              Year={year1}
+              LowerTableData={LowerTableData}
+              setLowerTableData={LowerTableData}
+              section={timings[0]}
+            />
           </>
         ))}
       </div>

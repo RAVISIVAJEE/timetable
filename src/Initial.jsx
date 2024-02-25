@@ -26,6 +26,15 @@ function Initial() {
     MECH: { II: {}, III: {}, IV: {} },
     CIVIL: { II: {}, III: {}, IV: {} },
   });
+  const [LowerTableData, setLowerTableData] = useState({
+    BSH: {},
+    CSE: { II: {}, III: {}, IV: {} },
+    ECE: { II: {}, III: {}, IV: {} },
+    IT: { II: {}, III: {}, IV: {} },
+    EEE: { II: {}, III: {}, IV: {} },
+    MECH: { II: {}, III: {}, IV: {} },
+    CIVIL: { II: {}, III: {}, IV: {} },
+  });
   const [facultytimings, setfacultytimings] = useState({});
   //const [isbuttonClicked, setisbuttonClicked] = useState(false);
 
@@ -64,6 +73,8 @@ function Initial() {
                 <BranchTimeTable
                   CollegeTimings={CollegeTimings}
                   setCollegeTimings={setCollegeTimings}
+                  LowerTableData={LowerTableData}
+                  setLowerTableData={setLowerTableData}
                 />
               }
             />
@@ -84,6 +95,8 @@ function Initial() {
                   setCollegeTimings={setCollegeTimings}
                   CollegeSubjects={CollegeSubjects}
                   setCollegeSubjects={setCollegeSubjects}
+                  LowerTableData={LowerTableData}
+                  setLowerTableData={setLowerTableData}
                 />
               }
             />
@@ -97,6 +110,8 @@ function Initial() {
                   setCollegeSubjects={setCollegeSubjects}
                   facultytimings={facultytimings}
                   setfacultytimings={setfacultytimings}
+                  LowerTableData={LowerTableData}
+                  setLowerTableData={setLowerTableData}
                 />
               }
             />

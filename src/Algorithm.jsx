@@ -17,6 +17,7 @@ function Algorithm(subjects) {
   const setsectiontimings = subjects["setsectiontimings"];
   const facultytimings = subjects["facultytimings"];
   const setCollegeTimings = subjects["setCollegeTimings"];
+  const CollegeSubjects = subjects["CollegeSubjects"];
   const setCollegeSubjects = subjects["setCollegeSubjects"];
   const Branch = subjects["Branch"];
   const setBranch = subjects["setBranch"];
@@ -245,6 +246,10 @@ function Algorithm(subjects) {
         tempSubjects[Branch][Year] = courses;
         return tempSubjects;
       });
+      console.log(
+        "After the CollegeSubjects are changed in Algorithm.jsx",
+        CollegeSubjects
+      );
     }
     setsectiontimings({});
     setsubjects({});

@@ -19,6 +19,8 @@ function App({
   setBranch,
   setYear,
   setdata,
+  LowerTableData,
+  setLowerTableData,
 }) {
   const [count, setcount] = useState(0);
   const [sections, setsections] = useState([]);
@@ -100,6 +102,10 @@ function App({
           setfacultyarraytable={setfacultyarraytable}
           issubjectsallocated={issubjectsallocated}
           setisfacultyalloted={setisfacultyalloted}
+          LowerTableData={LowerTableData}
+          setLowerTableData={setLowerTableData}
+          Branch={Branch}
+          Year={Year}
         />
       )}
       {displayingtimetable && (

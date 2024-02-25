@@ -12,6 +12,10 @@ function Facultyrendering({
   issubjectsallocated,
   setfacultyarraytable,
   setisfacultyalloted,
+  LowerTableData,
+  setLowerTableData,
+  Branch,
+  Year,
 }) {
   const [facultyname, setfacultyname] = useState("");
   const [sub, setsub] = useState("");
@@ -47,6 +51,36 @@ function Facultyrendering({
     });
     let newArray5 = [facultyname, sub, sec];
     setfacultyarraytable((prevtable) => [...prevtable, newArray5]);
+    // setLowerTableData((prevdata) => {
+    //   const tempstoragedata = { ...prevdata };
+    //   tempstoragedata[Branch][Year][sec][sub] = facultyname;
+    //   return tempstoragedata;
+    // });
+    if (LowerTableData) {
+      setLowerTableData((prevdata) => {
+        // Create a copy of the previous state
+        const updatedData = { ...prevdata };
+
+        // Initialize nested objects if they don't exist
+        if (!updatedData[Branch]) {
+          updatedData[Branch] = {};
+        }
+        if (!updatedData[Branch][Year]) {
+          updatedData[Branch][Year] = {};
+        }
+        if (!updatedData[Branch][Year][sec]) {
+          updatedData[Branch][Year][sec] = {};
+        }
+
+        // Set facultyname under the appropriate sub key
+        updatedData[Branch][Year][sec][sub] = facultyname;
+
+        // Return the updated data
+        return updatedData;
+      });
+    }
+
+    console.log("Lower table data in Facultyrendering is ", LowerTableData);
     setisfacultyalloted(true);
     (() => {
       setfacultyname("");

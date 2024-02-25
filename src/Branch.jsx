@@ -8,6 +8,8 @@ function Branch({
   setfacultytimings,
   CollegeSubjects,
   setCollegeSubjects,
+  LowerTableData,
+  setLowerTableData,
 }) {
   const Branchnames = ["CSE", "ECE", "EEE", "IT", "CIVIL", "MECH"];
   const Years = ["II", "III", "IV"];
@@ -69,6 +71,8 @@ function Branch({
           setfacultytimings={setfacultytimings}
           CollegeSubjects={CollegeSubjects}
           setCollegeSubjects={setCollegeSubjects}
+          LowerTableData={LowerTableData}
+          setLowerTableData={setLowerTableData}
         />
       )}
     </>
