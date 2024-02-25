@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sectionrendering from "./Sectionrendering";
 import Subjects from "./Subjects";
 import Subjectstable from "./Subjectstable";
@@ -31,24 +31,27 @@ function App({
   const [tableofsubjects, settableofsubjects] = useState([]);
   const [issubjectsallocated, setissubjectsallocated] = useState(false);
   const [faculty, setfaculty] = useState({});
-  //const [facultytimings, setfacultytimings] = useState({});
   const [sectiontimings, setsectiontimings] = useState({});
   const [displayingtimetable, setdisplayingtimetable] = useState(false);
-  //Array.from({ length: count }, () => "hello")
-  console.log("in App.jsx CollegeTimings are", CollegeTimings);
-  console.log("in App.jsx setCollegeTimings are", setCollegeTimings);
-  function handleCount(e, statefunction, string) {
+
+  const handleCount = (e, statefunction, string) => {
     e.preventDefault();
-    statefunction(parseInt(document.getElementById(`${string}`).value), 10);
-  }
+    const value = parseInt(document.getElementById(`${string}`).value, 10);
+    if (!isNaN(value) && value > 0) {
+      statefunction(value);
+    } else {
+      alert("Please enter a valid positive number.");
+    }
+  };
+
   useEffect(() => {
     setsections(Array.from({ length: count }, () => ""));
   }, [count]);
-  console.log(sections);
+
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       <label htmlFor="sectioncount">Number of sections:</label>
-      <input type="number" id="sectioncount" />
+      <input type="number" id="sectioncount" required min="1" />
       <button onClick={(e) => handleCount(e, setcount, "sectioncount")}>
         Set
       </button>

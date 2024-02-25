@@ -1,4 +1,5 @@
 import Subjectrendering from "./Subjectrendering";
+
 function Subjects({
   subjects,
   setsubjects,
@@ -15,7 +16,8 @@ function Subjects({
           setissubjectsallocated={setissubjectsallocated}
         />
       )}
-      {console.log(subjects)};
+
+      {console.log(subjects)}
     </div>
   );
 }

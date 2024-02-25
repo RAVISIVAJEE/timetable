@@ -6,6 +6,8 @@ import Branch from "./Branch";
 import HomePage from "./HomePage";
 import SelectTimeTablePage from "./SelectTimeTablePage";
 import BranchTimeTable from "./BranchTimeTable";
+import AboutPage from "./AboutPage";
+import PageNotFound from "./PageNotFound";
 function Initial() {
   const [selectedOption, setselectedOption] = useState("");
   const [CollegeTimings, setCollegeTimings] = useState({
@@ -67,6 +69,7 @@ function Initial() {
                 />
               }
             />
+            <Route path="*" element={<PageNotFound />} />
             <Route
               path="branchtimetable"
               element={
@@ -78,6 +81,7 @@ function Initial() {
                 />
               }
             />
+            <Route path="about" element={<AboutPage />} />
             <Route
               path="HomePage"
               element={

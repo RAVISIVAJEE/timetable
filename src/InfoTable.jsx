@@ -17,6 +17,9 @@ function InfoTable(data) {
     FRI: "5",
     SAT: "6",
   };
+  if (!dataa || Object.keys(dataa).length === 0) {
+    return <p>No data available</p>;
+  }
   console.log("Entered into INFO table", data);
   return (
     <>

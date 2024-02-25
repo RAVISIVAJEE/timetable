@@ -1,11 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import "./HomePage.css";
+import Header from "./Header";
 function HomePage({ selectedOption, handleOptionChange }) {
   return (
-    <div>
-      <p>Please select to enter data for which of the following</p>
-      <div>
-        <label>
+    <div className="Homepage">
+      <Header />
+      {/* <p>Please select to enter data for which of the following</p>
+      <div className="innerhomepage">
+        <label classname="label">
           <input
             type="radio"
             value="Bsh"
@@ -15,7 +17,7 @@ function HomePage({ selectedOption, handleOptionChange }) {
           BSH
         </label>
         <br />
-        <label>
+        <label className="label">
           <input
             type="radio"
             value="Branch"
@@ -29,8 +31,8 @@ function HomePage({ selectedOption, handleOptionChange }) {
       <Link to={`/${selectedOption}`}>
         <button type="button">Go</button>
       </Link>
-      <br />
-      <NavLink to="/selecttimetablepage">ShowTimeTable</NavLink>
+      <br /> */}
+      {/* <NavLink to="/selecttimetablepage">ShowTimeTable</NavLink> */}
     </div>
   );
 }

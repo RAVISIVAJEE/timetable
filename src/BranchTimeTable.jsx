@@ -1,14 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import InfoTable from "./InfoTable";
+
 function BranchTimeTable({
   CollegeTimings,
   setCollegeTimings,
   LowerTableData,
   setLowerTableData,
 }) {
-  //const CollegeTimings = CollegeTimings["CollegeTimings"];
-  console.log("Lower table data in BranchTable", LowerTableData);
   const names = ["CSE", "ECE", "EEE", "IT", "CIVIL", "MECH"];
   const Yearss = ["II", "III", "IV"];
   const [Branchh, setBranchh] = useState("");
@@ -17,9 +16,14 @@ function BranchTimeTable({
 
   function handletodisplay(e) {
     e.preventDefault();
-    settodisplay(!todisplay);
-    console.log("handletodisplay is clicked");
+    // Check if both branch and year are selected
+    if (Branchh && Yearr) {
+      settodisplay(true);
+    } else {
+      alert("Please select both branch and year.");
+    }
   }
+
   function handleBranchChange(branch) {
     setBranchh(branch);
     // Reset to not display InfoTable when branch changes
@@ -31,6 +35,7 @@ function BranchTimeTable({
     // Reset to not display InfoTable when year changes
     settodisplay(false);
   }
+
   return (
     <>
       <Header />
@@ -69,13 +74,6 @@ function BranchTimeTable({
           Display
         </button>
       </div>
-      {console.log("todisplay is", todisplay)}
-      {console.log("Branchh and Yearr is", Branchh, Yearr)}
-      {console.log("College TImings are", CollegeTimings)}
-      {/* {console.log(
-        "CollegeTimings[Branchh][Yearr]",
-        CollegeTimings[Branchh][Yearr]
-      )} */}
 
       {todisplay &&
         Branchh &&

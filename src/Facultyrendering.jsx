@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 function Facultyrendering({
   facultyarraytable,
   setfaculty,
@@ -21,16 +22,23 @@ function Facultyrendering({
   const [sub, setsub] = useState("");
   const [sec, setsec] = useState("");
   const [isnofaculty, setisnofaculty] = useState(false);
+  const [error, setError] = useState("");
 
-  // function handleAdd(e) {
-  //   e.preventDefault();
-  //   let newArray = [];
-  //   newArray.push(sub);
-  //   newArray.push(sec);
-  //   setfaculty((prevfaculty) => {prevfaculty.has(facultyname)? {...prevfaculty,[facultyname].push(newArray)}:{...prevfaculty,[facultyname]:[newArray]}});
-  // }
+  useEffect(() => {
+    console.log("After updated", faculty);
+    console.log("After updated faculty timings", facultytimings);
+    console.log("Faculty Array table is ", facultyarraytable);
+  }, [faculty, facultytimings, facultyarraytable]);
+
   function handleAdd(e) {
     e.preventDefault();
+    // Client-side validation
+    if (!facultyname || !sub || !sec) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    setError("");
+
     let newArray = [sub, sec];
     setfaculty((prevfaculty) => {
       const updatedFaculty = { ...prevfaculty };
@@ -41,7 +49,6 @@ function Facultyrendering({
       }
       return updatedFaculty;
     });
-    //console.log("After updated", faculty);
     setfacultytimings((prevtimings) => {
       const updatedtimings = { ...prevtimings };
       if (!prevtimings[facultyname]) {
@@ -51,17 +58,11 @@ function Facultyrendering({
     });
     let newArray5 = [facultyname, sub, sec];
     setfacultyarraytable((prevtable) => [...prevtable, newArray5]);
-    // setLowerTableData((prevdata) => {
-    //   const tempstoragedata = { ...prevdata };
-    //   tempstoragedata[Branch][Year][sec][sub] = facultyname;
-    //   return tempstoragedata;
-    // });
+
+    // Update LowerTableData
     if (LowerTableData) {
       setLowerTableData((prevdata) => {
-        // Create a copy of the previous state
         const updatedData = { ...prevdata };
-
-        // Initialize nested objects if they don't exist
         if (!updatedData[Branch]) {
           updatedData[Branch] = {};
         }
@@ -71,38 +72,28 @@ function Facultyrendering({
         if (!updatedData[Branch][Year][sec]) {
           updatedData[Branch][Year][sec] = {};
         }
-
-        // Set facultyname under the appropriate sub key
         updatedData[Branch][Year][sec][sub] = facultyname;
-
-        // Return the updated data
         return updatedData;
       });
     }
 
-    console.log("Lower table data in Facultyrendering is ", LowerTableData);
     setisfacultyalloted(true);
-    (() => {
-      setfacultyname("");
-      setsub("");
-      setsec("");
-    })();
+    setfacultyname("");
+    setsub("");
+    setsec("");
   }
-  useEffect(() => {
-    console.log("After updated", faculty);
-    console.log("After updated faculty timings", facultytimings);
-    console.log("Faculty Array table is ", facultyarraytable);
-  }, [faculty, facultytimings, facultyarraytable]); // This useEffect will run whenever the faculty state changes
 
   function handleFinish(e) {
     setisnofaculty(!isnofaculty);
     setdisplayingtimetable(!displayingtimetable);
   }
+
   return (
     <>
       {!isnofaculty && (
         <form>
-          <label htmlFor="facultyname">FacultyName:</label>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <label htmlFor="facultyname">Faculty Name:</label>
           <input
             type="text"
             id="facultyname"
@@ -137,10 +128,10 @@ function Facultyrendering({
               </option>
             ))}
           </select>
-          <button type="button" id="add" onClick={(e) => handleAdd(e)}>
+          <button type="button" onClick={(e) => handleAdd(e)}>
             Add
           </button>
-          <button id="Finish" type="button" onClick={(e) => handleFinish(e)}>
+          <button type="button" onClick={(e) => handleFinish(e)}>
             Finish
           </button>
         </form>

@@ -9,9 +9,17 @@ function Subjectrendering({
   const [duration, setduration] = useState("");
   const [occurences, setoccurences] = useState("");
   const [subjectsnotcompleted, setsubjectsnotcompleted] = useState(true);
+  const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
+    // Check if any field is empty
+    if (!subject || !duration || !occurences) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    // Perform custom validation using handleValidation function
+
     setsubjects((prevsubjects) => ({
       ...prevsubjects,
       [subject]: [parseInt(duration, 10), parseInt(occurences, 10)],
@@ -21,6 +29,7 @@ function Subjectrendering({
     setsubject("");
     setduration("");
     setoccurences("");
+    setError("");
   }
 
   function handleStop(e) {
@@ -33,6 +42,7 @@ function Subjectrendering({
     <>
       {subjectsnotcompleted && (
         <div className="subjectrendering">
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <label htmlFor="subjectname">Enter subject Name:</label>
           <input
             type="text"
@@ -42,17 +52,21 @@ function Subjectrendering({
           />
           <label htmlFor="duration">Duration</label>
           <input
-            type="text"
+            type="number"
             id="duration"
-            value={isNaN(duration) ? "" : duration}
-            onChange={(e) => setduration(parseInt(e.target.value), 10)}
+            value={duration}
+            onChange={(e) => setduration(parseInt(e.target.value, 10))}
+            min="1"
+            max="4"
           />
-          <label htmlFor="occurences">Occurences</label>
+          <label htmlFor="occurences">Occurrences</label>
           <input
-            type="text"
+            type="number"
             id="occurences"
-            value={isNaN(occurences) ? "" : occurences}
-            onChange={(e) => setoccurences(parseInt(e.target.value), 10)}
+            value={occurences}
+            onChange={(e) => setoccurences(parseInt(e.target.value, 10))}
+            min="1"
+            max="4"
           />
           <div className="button-group">
             <button onClick={(e) => handleSubmit(e)}>Add</button>
