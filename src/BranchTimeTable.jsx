@@ -7,6 +7,8 @@ function BranchTimeTable({
   setCollegeTimings,
   LowerTableData,
   setLowerTableData,
+  selectedOption,
+  setselectedOption,
 }) {
   const names = ["CSE", "ECE", "EEE", "IT", "CIVIL", "MECH"];
   const Yearss = ["II", "III", "IV"];
@@ -86,6 +88,8 @@ function BranchTimeTable({
             year={Yearr}
             LowerTableData={LowerTableData}
             setLowerTableData={setLowerTableData}
+            selectedOption={selectedOption}
+            setselectedOption={setselectedOption}
           />
         )}
     </>

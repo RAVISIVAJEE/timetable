@@ -74,7 +74,13 @@ function Initial() {
             />
             <Route
               path="facultytimetable"
-              element={<FacultyTimeTable facultytimings={facultytimings} />}
+              element={
+                <FacultyTimeTable
+                  facultytimings={facultytimings}
+                  selectedOption={selectedOption}
+                  setselectedOption={setselectedOption}
+                />
+              }
             />
             <Route
               path="bshtimetable"
@@ -143,6 +149,8 @@ function Initial() {
                   setfacultytimings={setfacultytimings}
                   LowerTableData={LowerTableData}
                   setLowerTableData={setLowerTableData}
+                  selectedOption={selectedOption}
+                  setselectedOption={setselectedOption}
                 />
               }
             />
