@@ -150,7 +150,8 @@ function Algorithm(subjects) {
                   newArray2["timings"] = p;
                   newArray2["subject"] = facultyArray[i][0];
                   newArray2["section"] = s;
-
+                  newArray2["Branch"] = Branch;
+                  newArray2["Year"] = Year;
                   facultytimings[facultyName].push(newArray2);
                   k = k + 1;
 
@@ -172,7 +173,8 @@ function Algorithm(subjects) {
               newArray2["timings"] = p;
               newArray2["subject"] = facultyArray[i][0];
               newArray2["section"] = s;
-
+              newArray2["Branch"] = Branch;
+              newArray2["Year"] = Year;
               facultytimings[facultyName].push(newArray2);
 
               let newArray = [];
