@@ -1,5 +1,14 @@
 import Header from "./Header";
-
+import * as XLSX from "xlsx";
+const exportToExcel = () => {
+  const wb = XLSX.utils.table_to_book(
+    document.getElementById("facultytimetable"),
+    {
+      sheet: "Sheet JS",
+    }
+  );
+  XLSX.writeFile(wb, "facultyinfo_table.xlsx");
+};
 function FacultyTimeTable({ facultytimings }) {
   const weeks1 = ["MON", "TUE", "WED", "THUR", "FRI", "SAT"];
   const Suffix1 = [".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9"];
@@ -91,6 +100,7 @@ function FacultyTimeTable({ facultytimings }) {
                 ))}
               </tbody>
             </table>
+            <button onClick={exportToExcel}>Export to Excel</button>
           </section>
         ))}
       </div>

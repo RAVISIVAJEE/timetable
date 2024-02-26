@@ -51,7 +51,7 @@ function Facultytable({
   }
 
   return (
-    <div>
+    <div className="facultytimetable">
       <table>
         <thead>
           <tr>
@@ -74,6 +74,7 @@ function Facultytable({
         </tbody>
       </table>
       {/* Confirmation dialog */}
+
       {confirmDelete && (
         <div>
           <p>Are you sure you want to delete this entry?</p>

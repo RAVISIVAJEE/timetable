@@ -1,4 +1,4 @@
-//import { Link } from "react-router-dom";
+import React from "react";
 
 function Algorithm(subjects) {
   const courses = subjects["subjects"];
@@ -30,6 +30,9 @@ function Algorithm(subjects) {
   console.log("in Algorithm.jsx setCollegeTimings are", setCollegeTimings);
 
   function handleAllocation(e) {
+    const maxAttempts = 1000; // Define maximum number of attempts
+    let attemptCounter = 0; // Counter to track attempts
+
     const Timings = [
       1.1, 1.2, 1.4, 1.5, 1.7, 1.8, 1.9, 2.1, 2.2, 2.4, 2.5, 2.7, 2.8, 2.9, 3.1,
       3.2, 3.4, 3.5, 3.7, 3.8, 3.9, 4.1, 4.2, 4.4, 4.5, 4.7, 4.8, 4.9, 5.1, 5.2,
@@ -37,7 +40,8 @@ function Algorithm(subjects) {
     ];
 
     const nonlabtimings = [
-      1.5, 1.9, 2.5, 2.9, 3.5, 3.9, 4.5, 4.9, 5.5, 5.9, 6.5,
+      1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
+      6.2, 6.5,
     ];
 
     let AvailbleTimings = {};
@@ -71,6 +75,8 @@ function Algorithm(subjects) {
 
     for (const s of sections) {
       for (const [facultyName, facultyArray] of Object.entries(faculty)) {
+        console.log("facultyname in Algorithm", facultyName);
+        console.log("facultyArray in Algorithm", facultyArray);
         for (let i = 0; i < facultyArray.length; i++) {
           if (
             facultyArray[i][1] === s &&
@@ -80,28 +86,34 @@ function Algorithm(subjects) {
             while (p < 1) {
               let temp = randompicker(AvailbleTimings[s]);
               if (!nonlabtimings.includes(temp)) {
-                let newArray2 = [];
-                let k = [];
-                k.push(temp);
-                k.push(parseFloat((temp + 0.1).toFixed(1)));
-                newArray2["timings"] = k;
-                newArray2["subject"] = facultyArray[i][0];
-                newArray2["section"] = s;
-                newArray2["Branch"] = Branch;
-                newArray2["Year"] = Year;
+                let z = 0;
+                while (z < 2) {
+                  let newArray2 = [];
+                  let k = [];
+                  k.push(temp);
+                  //k.push(parseFloat((temp + 0.1).toFixed(1)));
+                  newArray2["timings"] = k;
+                  newArray2["subject"] = facultyArray[i][0];
+                  newArray2["section"] = s;
+                  newArray2["Branch"] = Branch;
+                  newArray2["Year"] = Year;
 
-                console.log("Allocation of ", facultyArray[i][0]);
+                  console.log("Allocation of ", facultyArray[i][0]);
 
-                facultytimings[facultyName].push(newArray2);
+                  facultytimings[facultyName].push(newArray2);
 
-                let newArray = [];
-                newArray.push(temp);
-                newArray.push(facultyArray[i][0]);
-                newArray.push(facultyName);
-                sectiontimings[s].push(newArray);
+                  let newArray = [];
+                  newArray.push(temp);
+                  newArray.push(facultyArray[i][0]);
+                  newArray.push(facultyName);
+                  sectiontimings[s].push(newArray);
+                  temp = parseFloat(temp);
+                  temp = (temp + 0.1).toFixed(1);
+                  z = z + 1;
+                }
 
                 AvailbleTimings[s] = AvailbleTimings[s].filter(
-                  (el) => el !== parseFloat((temp + 0.1).toFixed(1))
+                  (el) => el !== parseFloat(temp + 0.1).toFixed(1)
                 );
                 p = p + 1;
               }
@@ -126,7 +138,9 @@ function Algorithm(subjects) {
               while (k < courses[facultyArray[i][0]][1]) {
                 let temp = randompicker(AvailbleTimings[s]);
                 let tempfacultyArray = facultytimings[facultyName].map((ele) =>
-                  ele[1] === facultyArray[i][0] ? Math.floor(ele[0]) : undefined
+                  ele["subject"] === facultyArray[i][0]
+                    ? Math.floor(ele["timings"][0])
+                    : undefined
                 );
 
                 if (!tempfacultyArray.includes(Math.floor(temp))) {

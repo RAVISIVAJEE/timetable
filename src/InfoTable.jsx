@@ -1,5 +1,7 @@
 import Header from "./Header";
 import LowerTable from "./LowerTable";
+import * as XLSX from "xlsx";
+
 function InfoTable(data) {
   const selectedOption = data["selectedOption"];
   const setselectedOption = data["setselectedOption"];
@@ -23,11 +25,31 @@ function InfoTable(data) {
   if (!dataa || Object.keys(dataa).length === 0) {
     return <p>No data available</p>;
   }
+
+  const exportToExcel = () => {
+    const wb = XLSX.utils.book_new(); // Create a new workbook
+
+    // Convert info table to worksheet
+    const wsInfoTable = XLSX.utils.table_to_sheet(
+      document.getElementById("table")
+    );
+    XLSX.utils.book_append_sheet(wb, wsInfoTable, "Info Table"); // Append info table to workbook
+
+    // Convert second table to worksheet
+    const wsSecondTable = XLSX.utils.table_to_sheet(
+      document.getElementById("lowertable")
+    );
+    XLSX.utils.book_append_sheet(wb, wsSecondTable, "Second Table"); // Append second table to workbook
+
+    // Write workbook to file
+    XLSX.writeFile(wb, "info_and_second_table.xlsx");
+  };
+
   console.log("Entered into INFO table", data);
   return (
     <>
       <Header />
-      <div>
+      <div id="table">
         {Object.entries(dataa).map((timings, index) => (
           <>
             <section>
@@ -88,6 +110,7 @@ function InfoTable(data) {
                 ))}
               </tbody>
             </table>
+
             {console.log("Lower table data in Info table", LowerTableData)}
             <LowerTable
               Branch={branch1}
@@ -101,6 +124,7 @@ function InfoTable(data) {
           </>
         ))}
       </div>
+      <button onClick={exportToExcel}>Export to Excel</button>
     </>
   );
 }

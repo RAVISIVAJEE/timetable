@@ -29,7 +29,7 @@ function LowerTable({
   }
 
   return (
-    <div>
+    <div id="lowertable">
       <table border="1">
         <thead>
           <tr>
