@@ -1,7 +1,9 @@
 import React from "react";
-
+import { useEffect } from "react";
 function Algorithm(subjects) {
   const courses = subjects["subjects"];
+  const isOpenElectiveEntered = subjects["isOpenElectiveEntered"];
+  const setisOpenElectiveEntered = subjects["setisOpenElectiveEntered"];
   const setcount = subjects["setcount"];
   const setsections = subjects["setsections"];
   const setisfacultyalloted = subjects["setisfacultyalloted"];
@@ -25,28 +27,78 @@ function Algorithm(subjects) {
   const setdata = subjects["setdata"];
   const CollegeTimings = subjects["CollegeTimings"];
   const selectedOption = subjects["selectedOption"];
+  const electiveTimings = subjects["electiveTimings"];
+  const setelectiveTimings = subjects["setelectiveTimings"];
+  const setissetbuttonClicked = subjects["setissetbuttonClicked"];
+  const setiselectivetabledisplayed = subjects["setiselectivetabledisplayed"];
+
   console.log("in Algorithm.jsx subjects are", subjects);
   //console.log("in Algorithm.jsx CollegeTimings are", CollegeTimings);
   console.log("in Algorithm.jsx setCollegeTimings are", setCollegeTimings);
 
+  const Timings = [
+    1.1, 1.2, 1.4, 1.5, 1.7, 1.8, 1.9, 2.1, 2.2, 2.4, 2.5, 2.7, 2.8, 2.9, 3.1,
+    3.2, 3.4, 3.5, 3.7, 3.8, 3.9, 4.1, 4.2, 4.4, 4.5, 4.7, 4.8, 4.9, 5.1, 5.2,
+    5.4, 5.5, 5.7, 5.8, 5.9, 6.1, 6.2, 6.4, 6.5,
+  ];
+
+  const nonlabtimings = [
+    1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
+    6.2, 6.5,
+  ];
+  function randompicker(inputArray) {
+    if (inputArray.length === 0) {
+      return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * inputArray.length);
+    const randomNumber = inputArray[randomIndex];
+    inputArray.splice(randomIndex, 1);
+
+    for (let i = inputArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
+    }
+
+    console.log("The random picker number is ", randomNumber);
+    return randomNumber;
+  }
+
+  useEffect(
+    function () {
+      if (isOpenElectiveEntered && !electiveTimings[Year].length) {
+        let duptnonlabtimings = nonlabtimings;
+
+        let arr = [];
+        while (arr.length < 3) {
+          let temp = randompicker(duptnonlabtimings);
+          let temparr = arr.map((ele) =>
+            Math.floor(ele) ? Math.floor(ele) : undefined
+          );
+          if (!temparr.includes(Math.floor(temp))) {
+            arr.push(temp);
+          } else {
+            duptnonlabtimings.push(temp);
+          }
+        }
+        setelectiveTimings((prevElectiveTimings) => {
+          return {
+            ...prevElectiveTimings, // Preserve previous values
+            [Year]: arr, // Update the timings for the current year
+          };
+        });
+        console.log("arr is ", arr);
+        console.log("Elective Timings are ", electiveTimings);
+      }
+    },
+    [Year]
+  );
   function handleAllocation(e) {
-    const maxAttempts = 1000; // Define maximum number of attempts
-    let attemptCounter = 0; // Counter to track attempts
-
-    const Timings = [
-      1.1, 1.2, 1.4, 1.5, 1.7, 1.8, 1.9, 2.1, 2.2, 2.4, 2.5, 2.7, 2.8, 2.9, 3.1,
-      3.2, 3.4, 3.5, 3.7, 3.8, 3.9, 4.1, 4.2, 4.4, 4.5, 4.7, 4.8, 4.9, 5.1, 5.2,
-      5.4, 5.5, 5.7, 5.8, 5.9, 6.1, 6.2, 6.4, 6.5,
-    ];
-
-    const nonlabtimings = [
-      1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
-      6.2, 6.5,
-    ];
-
     let AvailbleTimings = {};
     for (const j of sections) {
-      AvailbleTimings[j] = [...Timings];
+      AvailbleTimings[j] = Timings.filter(
+        (ele) => !electiveTimings[Year].includes(ele)
+      );
     }
 
     console.log("The sections in Algorithm.jsx is", sections);
@@ -55,24 +107,43 @@ function Algorithm(subjects) {
     console.log("The sectiontimings in Algorithm.jsx is", sectiontimings);
     console.log("The facultytimings in Algorithm.jsx is", facultytimings);
 
-    function randompicker(inputArray) {
-      if (inputArray.length === 0) {
-        return null;
+    //for electives
+
+    for (const s of sections) {
+      for (const [facultyName, facultyArray] of Object.entries(faculty)) {
+        for (let i = 0; i < facultyArray.length; i++) {
+          if (facultyArray[i][1] === s && facultyArray[i][2]) {
+            let k = 0;
+            while (k < 3) {
+              let temp = electiveTimings[Year][k];
+              console.log("electiveTimings is ", electiveTimings);
+              console.log(
+                "electiveTimings[Year][k] is ",
+                electiveTimings[Year][k]
+              );
+              let newArrayy = [];
+              let p = [];
+              p.push(temp);
+              newArrayy["timings"] = p;
+              newArrayy["subject"] = facultyArray[i][0];
+              newArrayy["subjectcode"] = courses[facultyArray[i][0]][2];
+              newArrayy["section"] = s;
+              newArrayy["Branch"] = Branch;
+              newArrayy["Year"] = Year;
+              facultytimings[facultyName].push(newArrayy);
+              k = k + 1;
+              let newArray = [];
+              newArray.push(temp);
+              newArray.push(facultyArray[i][0]);
+              newArray.push(facultyName);
+              newArray.push(courses[facultyArray[i][0]][2]);
+              sectiontimings[s].push(newArray);
+            }
+          }
+        }
       }
-
-      const randomIndex = Math.floor(Math.random() * inputArray.length);
-      const randomNumber = inputArray[randomIndex];
-      inputArray.splice(randomIndex, 1);
-
-      for (let i = inputArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
-      }
-
-      console.log("The random picker number is ", randomNumber);
-      return randomNumber;
     }
-
+    //for labs
     for (const s of sections) {
       for (const [facultyName, facultyArray] of Object.entries(faculty)) {
         console.log("facultyname in Algorithm", facultyName);
@@ -80,6 +151,7 @@ function Algorithm(subjects) {
         for (let i = 0; i < facultyArray.length; i++) {
           if (
             facultyArray[i][1] === s &&
+            !facultyArray[i][2] &&
             courses[facultyArray[i][0]][0] === 2
           ) {
             let p = 0;
@@ -94,6 +166,7 @@ function Algorithm(subjects) {
                   //k.push(parseFloat((temp + 0.1).toFixed(1)));
                   newArray2["timings"] = k;
                   newArray2["subject"] = facultyArray[i][0];
+                  newArray2["subjectcode"] = courses[facultyArray[i][0]][2];
                   newArray2["section"] = s;
                   newArray2["Branch"] = Branch;
                   newArray2["Year"] = Year;
@@ -106,6 +179,7 @@ function Algorithm(subjects) {
                   newArray.push(temp);
                   newArray.push(facultyArray[i][0]);
                   newArray.push(facultyName);
+                  newArray.push(courses[facultyArray[i][0]][2]);
                   sectiontimings[s].push(newArray);
                   temp = parseFloat(temp);
                   temp = (temp + 0.1).toFixed(1);
@@ -128,6 +202,7 @@ function Algorithm(subjects) {
         for (let i = 0; i < facultyArray.length; i++) {
           if (
             facultyArray[i][1] === s &&
+            !facultyArray[i][2] &&
             courses[facultyArray[i][0]][0] === 1
           ) {
             if (
@@ -149,6 +224,7 @@ function Algorithm(subjects) {
                   p.push(temp);
                   newArray2["timings"] = p;
                   newArray2["subject"] = facultyArray[i][0];
+                  newArray2["subjectcode"] = courses[facultyArray[i][0]][2];
                   newArray2["section"] = s;
                   newArray2["Branch"] = Branch;
                   newArray2["Year"] = Year;
@@ -159,6 +235,7 @@ function Algorithm(subjects) {
                   newArray.push(temp);
                   newArray.push(facultyArray[i][0]);
                   newArray.push(facultyName);
+                  newArray.push(courses[facultyArray[i][0]][2]);
                   sectiontimings[s].push(newArray);
                 } else {
                   AvailbleTimings[s].push(temp);
@@ -167,11 +244,13 @@ function Algorithm(subjects) {
             }
             if (courses[facultyArray[i][0]][1] === 1) {
               let temp = randompicker(AvailbleTimings[s]);
+
               let newArray2 = [];
               let p = [];
               p.push(temp);
               newArray2["timings"] = p;
               newArray2["subject"] = facultyArray[i][0];
+              newArray2["subjectcode"] = courses[facultyArray[i][0]][2];
               newArray2["section"] = s;
               newArray2["Branch"] = Branch;
               newArray2["Year"] = Year;
@@ -181,6 +260,7 @@ function Algorithm(subjects) {
               newArray.push(temp);
               newArray.push(facultyArray[i][0]);
               newArray.push(facultyName);
+              newArray.push(courses[facultyArray[i][0]][2]);
               sectiontimings[s].push(newArray);
             }
           }
@@ -221,26 +301,28 @@ function Algorithm(subjects) {
     if (selectedOption["branch"] === "BSH") {
       setcount(0);
       setsections([]);
-      setisfacultyalloted(false);
-      setissectionalloted(false);
+      setisfacultyalloted((el) => !el);
+      setissectionalloted((el) => !el);
       setfacultyarraytable([]);
       setsubjects({});
       settableofsubjects([]);
-      setissubjectsallocated(false);
-      setdisplayingtimetable(false);
+      setissubjectsallocated((el) => !el);
+      setdisplayingtimetable((el) => !el);
     } else {
-      setdata((prevdata) => !prevdata);
+      setdata((el) => !el);
       setBranch("");
       setYear("");
       setcount(0);
       setsections([]);
-      setisfacultyalloted(false);
-      setissectionalloted(false);
+      setisfacultyalloted((el) => !el);
+      setissectionalloted((el) => !el);
       setfacultyarraytable([]);
       setsubjects({});
       settableofsubjects([]);
-      setissubjectsallocated(false);
-      setdisplayingtimetable(false);
+      setissubjectsallocated((el) => !el);
+      setdisplayingtimetable((el) => !el);
+      // setiselectivetabledisplayed((el) => !el);
+      setissetbuttonClicked(false);
     }
   }
 

@@ -39,9 +39,15 @@ function Facultyrendering({
       setError("Please fill in all fields.");
       return;
     }
-    setError("");
 
-    let newArray = [sub, sec];
+    setError("");
+    let newArray = [];
+    if (subjects[sub][3]) {
+      newArray = [sub, sec, true];
+    } else {
+      newArray = [sub, sec, false];
+    }
+    //let newArray = [sub, sec];
     setfaculty((prevfaculty) => {
       const updatedFaculty = { ...prevfaculty };
       if (prevfaculty[facultyname]) {
@@ -74,7 +80,7 @@ function Facultyrendering({
         if (!updatedData[Branch][Year][sec]) {
           updatedData[Branch][Year][sec] = {};
         }
-        updatedData[Branch][Year][sec][sub] = facultyname;
+        updatedData[Branch][Year][sec][sub] = [facultyname, subjects[sub][2]];
         return updatedData;
       });
     } else {
@@ -86,7 +92,7 @@ function Facultyrendering({
         if (!updatedData["BSH"][sec]) {
           updatedData["BSH"][sec] = {};
         }
-        updatedData["BSH"][sec][sub] = facultyname;
+        updatedData["BSH"][sec][sub] = [facultyname, subjects[sub][2]];
         return updatedData;
       });
     }

@@ -100,7 +100,7 @@ function InfoTable(data) {
                         );
                         console.log("Filterddata is ", filteredData);
                         return filteredData.length > 0 ? (
-                          <td key={el}>{filteredData[0][1]}</td>
+                          <td key={el}>{filteredData[0][3]}</td>
                         ) : (
                           <td key={el}></td>
                         );

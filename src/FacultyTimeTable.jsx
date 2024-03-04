@@ -90,7 +90,7 @@ function FacultyTimeTable({ facultytimings }) {
                         return (
                           <td key={suffix}>
                             {filteredData.length > 0
-                              ? `${filteredData[0]["subject"]}/${filteredData[0]["section"]}/${filteredData[0]["Branch"]}/${filteredData[0]["Year"]} `
+                              ? `${filteredData[0]["subjectcode"]}/${filteredData[0]["section"]}/${filteredData[0]["Branch"]}/${filteredData[0]["Year"]} `
                               : null}
                           </td>
                         );

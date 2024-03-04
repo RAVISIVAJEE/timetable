@@ -14,6 +14,8 @@ function App({
   setCollegeTimings,
   Branch,
   Year,
+  setissetbuttonClicked,
+  setiselectivetabledisplayed,
   CollegeSubjects,
   setCollegeSubjects,
   setBranch,
@@ -23,13 +25,20 @@ function App({
   setLowerTableData,
   selectedOption,
   setselectedOption,
+  isOpenElectiveEntered,
+  setisOpenElectiveEntered,
+  electiveTimings,
+  setelectiveTimings,
 }) {
   const [count, setcount] = useState(0);
   const [sections, setsections] = useState([]);
   const [isfacultyalloted, setisfacultyalloted] = useState(false);
   const [issectionallotted, setissectionalloted] = useState(false);
   const [facultyarraytable, setfacultyarraytable] = useState([]);
-  const [subjects, setsubjects] = useState({});
+  const [subjects, setsubjects] = useState({
+    ...CollegeSubjects[Branch][Year],
+  });
+  console.log("Subjects in App.js after openelective added", subjects);
   const [tableofsubjects, settableofsubjects] = useState([]);
   const [issubjectsallocated, setissubjectsallocated] = useState(false);
   const [faculty, setfaculty] = useState({});
@@ -118,6 +127,8 @@ function App({
       {displayingtimetable && (
         <Algorithm
           subjects={subjects}
+          setiselectivetabledisplayed={setiselectivetabledisplayed}
+          setissetbuttonClicked={setissetbuttonClicked}
           setsubjects={setsubjects}
           sections={sections}
           faculty={faculty}
@@ -145,6 +156,10 @@ function App({
           setdata={setdata}
           selectedOption={selectedOption}
           setselectedOption={setselectedOption}
+          isOpenElectiveEntered={isOpenElectiveEntered}
+          setisOpenElectiveEntered={setisOpenElectiveEntered}
+          electiveTimings={electiveTimings}
+          setelectiveTimings={setelectiveTimings}
         />
       )}
     </form>

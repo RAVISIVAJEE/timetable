@@ -8,13 +8,14 @@ function Subjectrendering({
   const [subject, setsubject] = useState("");
   const [duration, setduration] = useState("");
   const [occurences, setoccurences] = useState("");
+  const [SubjectCode, setSubjectCode] = useState("");
   const [subjectsnotcompleted, setsubjectsnotcompleted] = useState(true);
   const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
     // Check if any field is empty
-    if (!subject || !duration || !occurences) {
+    if (!subject || !duration || !occurences || !SubjectCode) {
       setError("Please fill in all fields.");
       return;
     }
@@ -22,13 +23,24 @@ function Subjectrendering({
 
     setsubjects((prevsubjects) => ({
       ...prevsubjects,
-      [subject]: [parseInt(duration, 10), parseInt(occurences, 10)],
+      [subject]: [
+        parseInt(duration, 10),
+        parseInt(occurences, 10),
+        SubjectCode,
+        false,
+      ],
     }));
-    let newArray5 = [subject, parseInt(duration, 10), parseInt(occurences, 10)];
+    let newArray5 = [
+      subject,
+      parseInt(duration, 10),
+      parseInt(occurences, 10),
+      SubjectCode,
+    ];
     settableofsubjects((prevsubjects) => [...prevsubjects, newArray5]);
     setsubject("");
     setduration("");
     setoccurences("");
+    setSubjectCode("");
     setError("");
   }
 
@@ -50,6 +62,13 @@ function Subjectrendering({
             value={subject}
             onChange={(e) => setsubject(e.target.value)}
           />
+          <label htmlFor="subjectcode">Enter Subject Code:</label>
+          <input
+            type="text"
+            id="subjectcode"
+            value={SubjectCode}
+            onChange={(e) => setSubjectCode(e.target.value)}
+          />
           <label htmlFor="duration">Duration</label>
           <input
             type="number"
@@ -68,6 +87,7 @@ function Subjectrendering({
             min="1"
             max="4"
           />
+
           <div className="button-group">
             <button onClick={(e) => handleSubmit(e)}>Add</button>
             <button onClick={(e) => handleStop(e)}>Finish</button>

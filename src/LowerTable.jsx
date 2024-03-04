@@ -34,6 +34,7 @@ function LowerTable({
         <thead>
           <tr>
             <th>S.NO</th>
+            <th>Course Code</th>
             <th>Course Title</th>
             <th>Faculty</th>
           </tr>
@@ -48,8 +49,9 @@ function LowerTable({
               ([courseTitle, faculty], index) => (
                 <tr key={courseTitle}>
                   <td>{index + 1}</td>
+                  <td>{faculty[1]}</td>
                   <td>{courseTitle}</td>
-                  <td>{faculty}</td>
+                  <td>{faculty[0]}</td>
                 </tr>
               )
             )}
@@ -58,8 +60,9 @@ function LowerTable({
               ([courseTitle, faculty], index) => (
                 <tr key={courseTitle}>
                   <td>{index + 1}</td>
+                  <td>{faculty[1]}</td>
                   <td>{courseTitle}</td>
-                  <td>{faculty}</td>
+                  <td>{faculty[0]}</td>
                 </tr>
               )
             )}

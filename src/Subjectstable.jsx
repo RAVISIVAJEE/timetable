@@ -31,6 +31,7 @@ function Subjectstable({ tableofsubjects, settableofsubjects, setsubjects }) {
         <thead>
           <tr>
             <th>Subject</th>
+            <th>SubjectCode</th>
             <th>Duration</th>
             <th>Occurences</th>
           </tr>
@@ -39,6 +40,7 @@ function Subjectstable({ tableofsubjects, settableofsubjects, setsubjects }) {
           {tableofsubjects.map((ele, index) => (
             <tr key={index}>
               <td>{ele[0]}</td>
+              <td>{ele[3]}</td>
               <td>{ele[1]}</td>
               <td>{ele[2]}</td>
               <td>

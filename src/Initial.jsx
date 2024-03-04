@@ -12,7 +12,7 @@ import BshTimeTable from "./BshTimeTable";
 import FacultyTimeTable from "./FacultyTimeTable";
 function Initial() {
   const [selectedOption, setselectedOption] = useState("");
-
+  const [isOpenElectiveEntered, setisOpenElectiveEntered] = useState(false);
   const [CollegeTimings, setCollegeTimings] = useState({
     BSH: {},
     CSE: { II: {}, III: {}, IV: {} },
@@ -42,13 +42,20 @@ function Initial() {
   });
   const [facultytimings, setfacultytimings] = useState({});
   //const [isbuttonClicked, setisbuttonClicked] = useState(false);
+  const [electiveTimings, setelectiveTimings] = useState({
+    III: [],
+    IV: [],
+  });
 
-  // useEffect(
-  //   function () {
-  //     console.log("College timings are in USeEffect", CollegeTimings);
-  //   },
-  //   [CollegeTimings]
-  // );
+  useEffect(
+    function () {
+      console.log("College Subjects are in initial.jsx", CollegeSubjects);
+      console.log("The elective Timings in initial.jsx is ", electiveTimings);
+      console.log("facultytimings are in initial.jsx", facultytimings);
+      console.log("CollegeTimings are in initial.jsx", CollegeTimings);
+    },
+    [CollegeSubjects, electiveTimings, CollegeTimings, facultytimings]
+  );
 
   function handleOptionChange(e) {
     setselectedOption(e.target.value);
@@ -151,6 +158,10 @@ function Initial() {
                   setLowerTableData={setLowerTableData}
                   selectedOption={selectedOption}
                   setselectedOption={setselectedOption}
+                  isOpenElectiveEntered={isOpenElectiveEntered}
+                  setisOpenElectiveEntered={setisOpenElectiveEntered}
+                  electiveTimings={electiveTimings}
+                  setelectiveTimings={setelectiveTimings}
                 />
               }
             />
