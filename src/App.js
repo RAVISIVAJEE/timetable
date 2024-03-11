@@ -8,6 +8,7 @@ import Facultytable from "./Facultytable";
 import "./App.css";
 
 function App({
+  randompicker,
   facultytimings,
   setfacultytimings,
   CollegeTimings,
@@ -104,8 +105,11 @@ function App({
       )}
       {issubjectsallocated && (
         <Facultyrendering
+          randompicker={randompicker}
           setfaculty={setfaculty}
           facultyarraytable={facultyarraytable}
+          electiveTimings={electiveTimings}
+          setelectiveTimings={setelectiveTimings}
           subjects={subjects}
           sections={sections}
           faculty={faculty}
@@ -120,6 +124,7 @@ function App({
           setLowerTableData={setLowerTableData}
           Branch={Branch}
           Year={Year}
+          isOpenElectiveEntered={isOpenElectiveEntered}
           selectedOption={selectedOption}
           setselectedOption={setselectedOption}
         />
@@ -160,6 +165,8 @@ function App({
           setisOpenElectiveEntered={setisOpenElectiveEntered}
           electiveTimings={electiveTimings}
           setelectiveTimings={setelectiveTimings}
+          LowerTableData={LowerTableData}
+          randompicker={randompicker}
         />
       )}
     </form>

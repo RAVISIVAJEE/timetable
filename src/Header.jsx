@@ -47,6 +47,11 @@ function Header({ selectedOption, setselectedOption }) {
               ShowTimeTable
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/deletedata" activeClassName="active">
+              DeleteData
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </header>

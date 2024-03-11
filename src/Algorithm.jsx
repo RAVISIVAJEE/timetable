@@ -1,9 +1,13 @@
 import React from "react";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
+
 function Algorithm(subjects) {
   const courses = subjects["subjects"];
+  let AvailbleTimings = {};
   const isOpenElectiveEntered = subjects["isOpenElectiveEntered"];
   const setisOpenElectiveEntered = subjects["setisOpenElectiveEntered"];
+  const randompicker = subjects["randompicker"];
   const setcount = subjects["setcount"];
   const setsections = subjects["setsections"];
   const setisfacultyalloted = subjects["setisfacultyalloted"];
@@ -19,6 +23,8 @@ function Algorithm(subjects) {
   const setsectiontimings = subjects["setsectiontimings"];
   const facultytimings = subjects["facultytimings"];
   const setCollegeTimings = subjects["setCollegeTimings"];
+  const CollegeSubjects = subjects["CollegeSubjects"];
+  const LowerTableData = subjects["LowerTableData"];
   const setCollegeSubjects = subjects["setCollegeSubjects"];
   const Branch = subjects["Branch"];
   const setBranch = subjects["setBranch"];
@@ -46,80 +52,92 @@ function Algorithm(subjects) {
     1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
     6.2, 6.5,
   ];
-  function randompicker(inputArray) {
-    if (inputArray.length === 0) {
-      return null;
-    }
 
-    const randomIndex = Math.floor(Math.random() * inputArray.length);
-    const randomNumber = inputArray[randomIndex];
-    inputArray.splice(randomIndex, 1);
+  useEffect(() => {}, []);
 
-    for (let i = inputArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
-    }
+  // function randompicker(inputArray) {
+  //   if (inputArray.length === 0) {
+  //     return null;
+  //   }
 
-    console.log("The random picker number is ", randomNumber);
-    return randomNumber;
-  }
+  //   const randomIndex = Math.floor(Math.random() * inputArray.length);
+  //   const randomNumber = inputArray[randomIndex];
+  //   inputArray.splice(randomIndex, 1);
 
-  useEffect(
-    function () {
-      if (isOpenElectiveEntered && !electiveTimings[Year].length) {
-        let duptnonlabtimings = nonlabtimings;
+  //   for (let i = inputArray.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
+  //   }
 
-        let arr = [];
-        while (arr.length < 3) {
-          let temp = randompicker(duptnonlabtimings);
-          let temparr = arr.map((ele) =>
-            Math.floor(ele) ? Math.floor(ele) : undefined
-          );
-          if (!temparr.includes(Math.floor(temp))) {
-            arr.push(temp);
-          } else {
-            duptnonlabtimings.push(temp);
-          }
-        }
-        setelectiveTimings((prevElectiveTimings) => {
-          return {
-            ...prevElectiveTimings, // Preserve previous values
-            [Year]: arr, // Update the timings for the current year
-          };
-        });
-        console.log("arr is ", arr);
-        console.log("Elective Timings are ", electiveTimings);
-      }
-    },
-    [Year]
-  );
+  //   console.log("The random picker number is ", randomNumber);
+  //   return randomNumber;
+  // }
+
   function handleAllocation(e) {
-    let AvailbleTimings = {};
+    console.log("Elective timings in algorithm.jsx is ", electiveTimings);
     for (const j of sections) {
       AvailbleTimings[j] = Timings.filter(
-        (ele) => !electiveTimings[Year].includes(ele)
+        (ele) =>
+          !electiveTimings[Year]["OE"].includes(ele) &&
+          !electiveTimings[Year]["PE"].includes(ele)
       );
+      console.log("Availble timings after filter is ", AvailbleTimings[j]);
     }
-
     console.log("The sections in Algorithm.jsx is", sections);
     console.log("The courses in Algorithm.jsx is", courses);
     console.log("The faculty in Algorithm.jsx is", faculty);
     console.log("The sectiontimings in Algorithm.jsx is", sectiontimings);
     console.log("The facultytimings in Algorithm.jsx is", facultytimings);
 
-    //for electives
+    //for PE
 
     for (const s of sections) {
       for (const [facultyName, facultyArray] of Object.entries(faculty)) {
         for (let i = 0; i < facultyArray.length; i++) {
-          if (facultyArray[i][1] === s && facultyArray[i][2]) {
+          if (facultyArray[i][1] === s && facultyArray[i][2] === "PE") {
             let k = 0;
             while (k < 3) {
-              let temp = electiveTimings[Year][k];
+              let temp = electiveTimings[Year]["PE"][k];
               console.log("electiveTimings is ", electiveTimings);
               console.log(
-                "electiveTimings[Year][k] is ",
-                electiveTimings[Year][k]
+                "electiveTimings[Year][PE][k] ",
+                electiveTimings[Year]["PE"][k]
+              );
+              let newArrayy = [];
+              let p = [];
+              p.push(temp);
+              newArrayy["timings"] = p;
+              newArrayy["subject"] = facultyArray[i][0];
+              newArrayy["subjectcode"] = courses[facultyArray[i][0]][2];
+              newArrayy["section"] = s;
+              newArrayy["Branch"] = Branch;
+              newArrayy["Year"] = Year;
+              facultytimings[facultyName].push(newArrayy);
+              k = k + 1;
+              let newArray = [];
+              newArray.push(temp);
+              newArray.push(facultyArray[i][0]);
+              newArray.push(facultyName);
+              newArray.push(courses[facultyArray[i][0]][2]);
+              sectiontimings[s].push(newArray);
+            }
+          }
+        }
+      }
+    }
+    //for OE
+
+    for (const s of sections) {
+      for (const [facultyName, facultyArray] of Object.entries(faculty)) {
+        for (let i = 0; i < facultyArray.length; i++) {
+          if (facultyArray[i][1] === s && facultyArray[i][2] === "OE") {
+            let k = 0;
+            while (k < 3) {
+              let temp = electiveTimings[Year]["OE"][k];
+              console.log("electiveTimings is ", electiveTimings);
+              console.log(
+                "electiveTimings[Year][OE][k] ",
+                electiveTimings[Year]["OE"][k]
               );
               let newArrayy = [];
               let p = [];
@@ -196,13 +214,14 @@ function Algorithm(subjects) {
         }
       }
     }
-
+    //for classes
     for (const s of sections) {
       for (const [facultyName, facultyArray] of Object.entries(faculty)) {
         for (let i = 0; i < facultyArray.length; i++) {
           if (
             facultyArray[i][1] === s &&
-            !facultyArray[i][2] &&
+            !facultyArray[i][2] === "OE" &&
+            !facultyArray[i][2] === "PE" &&
             courses[facultyArray[i][0]][0] === 1
           ) {
             if (
@@ -328,11 +347,15 @@ function Algorithm(subjects) {
 
   return (
     <div>
-      <button type="button" onClick={(e) => handleAllocation(e)}>
+      <button
+        type="button"
+        onClick={(e) => {
+          handleAllocation(e);
+        }}
+      >
         Allocate
       </button>
     </div>
   );
 }
-
 export default Algorithm;

@@ -3,6 +3,7 @@ import App from "./App";
 import Header from "./Header";
 import ElectiveTable from "./ElectiveTable";
 function Branch({
+  randompicker,
   CollegeTimings,
   setCollegeTimings,
   facultytimings,
@@ -28,6 +29,7 @@ function Branch({
   const [electiveDuration, setelectiveDuration] = useState(null);
   const [electiveOccurences, setelectiveOccurences] = useState(null);
   const [electiveBranch, setelectiveBranch] = useState("");
+  const [electivetype, setelectivetype] = useState("");
   const [electiveYear, setelectiveYear] = useState("");
   const [electiveTableData, setelectiveTableData] = useState([]);
   const [iselectivetabledisplayed, setiselectivetabledisplayed] =
@@ -67,7 +69,7 @@ function Branch({
         electiveDuration,
         electiveOccurences,
         electiveNameCode,
-        true,
+        electivetype,
       ];
       return tempSubjects;
     });
@@ -77,6 +79,7 @@ function Branch({
     setelectiveDuration(null);
     setelectiveOccurences(null);
     setelectiveBranch("");
+    setelectivetype("");
   }
   function handleElectiveFinish(e) {
     e.preventDefault();
@@ -190,6 +193,7 @@ function Branch({
               ))}
             </select>
             <br />
+            <label htmlFor="yearname">Year:</label>
             <select name="yearname" id="yearname" value={Year}>
               <option value="">Select Year</option>
               {Years.map((ele) => (
@@ -197,6 +201,17 @@ function Branch({
                   {ele}
                 </option>
               ))}
+            </select>
+            <label htmlFor="electivetype">Select Elective Type:</label>
+            <select
+              name="electivetype"
+              id="electivetype"
+              value={electivetype}
+              onChange={(e) => setelectivetype(e.target.value)}
+            >
+              <option value="">Select type</option>
+              <option value="OE">OE</option>
+              <option value="PE">PE</option>
             </select>
             <button onClick={(e) => handleElectiveAdd(e)}>Add</button>
             <button onClick={(e) => handleElectiveFinish(e)}>Finish</button>
@@ -225,6 +240,7 @@ function Branch({
           setselectedOption={setselectedOption}
           setiselectivetabledisplayed={setiselectivetabledisplayed}
           setissetbuttonClicked={setissetbuttonClicked}
+          randompicker={randompicker}
         />
       )}
     </>

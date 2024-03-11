@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import DeleteData from "./DeleteData";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Bsh from "./Bsh";
 import Branch from "./Branch";
@@ -43,9 +43,91 @@ function Initial() {
   const [facultytimings, setfacultytimings] = useState({});
   //const [isbuttonClicked, setisbuttonClicked] = useState(false);
   const [electiveTimings, setelectiveTimings] = useState({
-    III: [],
-    IV: [],
+    III: { OE: [], PE: [] },
+    IV: { OE: [], PE: [] },
   });
+
+  useEffect(() => {
+    // Load data from local storage
+    const loadedCollegeTimings = localStorage.getItem("CollegeTimings");
+    console.log("loadedCollegeTimings", JSON.parse(loadedCollegeTimings));
+    const loadedCollegeSubjects = localStorage.getItem("CollegeSubjects");
+    console.log("CollegeSubjects", JSON.parse(loadedCollegeSubjects));
+    const loadedLowerTableData = localStorage.getItem("LowerTableData");
+    console.log("loadedLowerTableData", JSON.parse(loadedLowerTableData));
+    const loadedFacultyTimings = localStorage.getItem("facultytimings");
+    console.log("loadedFacultyTimings", JSON.parse(loadedFacultyTimings));
+    const loadedElectiveTimings = localStorage.getItem("electiveTimings");
+    console.log("loadedElectiveTimings", JSON.parse(loadedElectiveTimings));
+    const loadedIsOpenElectiveEntered = localStorage.getItem(
+      "isOpenElectiveEntered"
+    );
+    console.log(
+      "loadedIsOpenElectiveEntered",
+      JSON.parse(loadedIsOpenElectiveEntered)
+    );
+
+    // Parse JSON strings into JavaScript objects
+    setCollegeTimings(
+      JSON.parse(loadedCollegeTimings) || {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      }
+    );
+    setCollegeSubjects(
+      JSON.parse(loadedCollegeSubjects) || {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      }
+    );
+    setLowerTableData(
+      JSON.parse(loadedLowerTableData) || {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      }
+    );
+    setfacultytimings(JSON.parse(loadedFacultyTimings) || {});
+    setelectiveTimings(
+      JSON.parse(loadedElectiveTimings) || {
+        III: { OE: [], PE: [] },
+        IV: { OE: [], PE: [] },
+      }
+    );
+    setisOpenElectiveEntered(JSON.parse(loadedIsOpenElectiveEntered) || false);
+  }, []);
+
+  function randompicker(inputArray) {
+    if (inputArray.length === 0) {
+      return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * inputArray.length);
+    const randomNumber = inputArray[randomIndex];
+    inputArray.splice(randomIndex, 1);
+
+    for (let i = inputArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
+    }
+
+    console.log("The random picker number is ", randomNumber);
+    return randomNumber;
+  }
 
   useEffect(
     function () {
@@ -55,6 +137,28 @@ function Initial() {
       console.log("CollegeTimings are in initial.jsx", CollegeTimings);
     },
     [CollegeSubjects, electiveTimings, CollegeTimings, facultytimings]
+  );
+
+  useEffect(
+    function () {
+      localStorage.setItem("CollegeTimings", JSON.stringify(CollegeTimings));
+      localStorage.setItem(
+        "isOpenElectiveEntered",
+        JSON.stringify(isOpenElectiveEntered)
+      );
+      localStorage.setItem("CollegeSubjects", JSON.stringify(CollegeSubjects));
+      localStorage.setItem("LowerTableData", JSON.stringify(LowerTableData));
+      localStorage.setItem("facultytimings", JSON.stringify(facultytimings));
+      localStorage.setItem("electiveTimings", JSON.stringify(electiveTimings));
+    },
+    [
+      CollegeSubjects,
+      electiveTimings,
+      CollegeTimings,
+      facultytimings,
+      isOpenElectiveEntered,
+      LowerTableData,
+    ]
   );
 
   function handleOptionChange(e) {
@@ -70,6 +174,7 @@ function Initial() {
               path="/timetable"
               element={<Navigate to="/HomePage" />} // Redirect to HomePage
             />
+
             <Route
               path="selecttimetablepage"
               element={
@@ -86,6 +191,15 @@ function Initial() {
                   facultytimings={facultytimings}
                   selectedOption={selectedOption}
                   setselectedOption={setselectedOption}
+                />
+              }
+            />
+            <Route
+              path="deletedata"
+              element={
+                <DeleteData
+                  isOpenElectiveEntered={isOpenElectiveEntered}
+                  setisOpenElectiveEntered={setisOpenElectiveEntered}
                 />
               }
             />
@@ -141,6 +255,7 @@ function Initial() {
                   setCollegeSubjects={setCollegeSubjects}
                   LowerTableData={LowerTableData}
                   setLowerTableData={setLowerTableData}
+                  randompicker={randompicker}
                 />
               }
             />
@@ -162,6 +277,7 @@ function Initial() {
                   setisOpenElectiveEntered={setisOpenElectiveEntered}
                   electiveTimings={electiveTimings}
                   setelectiveTimings={setelectiveTimings}
+                  randompicker={randompicker}
                 />
               }
             />
