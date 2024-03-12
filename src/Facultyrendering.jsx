@@ -123,10 +123,10 @@ function Facultyrendering({
 
         while (arr1.length < 3) {
           let temp = randompicker(duptnonlabtimings);
-          let temparr = arr1.map((ele) =>
+          let temparr1 = arr1.map((ele) =>
             Math.floor(ele) ? Math.floor(ele) : undefined
           );
-          if (!temparr.includes(Math.floor(temp))) {
+          if (!temparr1.includes(Math.floor(temp))) {
             arr1.push(temp);
           } else {
             duptnonlabtimings.push(temp);
@@ -153,11 +153,11 @@ function Facultyrendering({
         let arr2 = [];
         while (arr2.length < 3) {
           let temp = randompicker(duptnonlabtimings);
-          let temparr = arr2.map((ele) =>
+          let temparr2 = arr2.map((ele) =>
             Math.floor(ele) ? Math.floor(ele) : undefined
           );
           if (
-            !temparr.includes(temp) &&
+            !temparr2.includes(Math.floor(temp)) &&
             (!electiveTimings[Year] ||
               !electiveTimings[Year]["PE"] ||
               !electiveTimings[Year]["PE"].includes(temp))

@@ -36,9 +36,14 @@ function App({
   const [isfacultyalloted, setisfacultyalloted] = useState(false);
   const [issectionallotted, setissectionalloted] = useState(false);
   const [facultyarraytable, setfacultyarraytable] = useState([]);
-  const [subjects, setsubjects] = useState({
-    ...CollegeSubjects[Branch][Year],
+  const [subjects, setsubjects] = useState(() => {
+    if (Branch === "BSH") {
+      return { ...CollegeSubjects[Branch][Year] };
+    } else {
+      return { ...CollegeSubjects[Branch] };
+    }
   });
+
   console.log("Subjects in App.js after openelective added", subjects);
   const [tableofsubjects, settableofsubjects] = useState([]);
   const [issubjectsallocated, setissubjectsallocated] = useState(false);
