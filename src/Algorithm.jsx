@@ -53,26 +53,6 @@ function Algorithm(subjects) {
     6.2, 6.5,
   ];
 
-  useEffect(() => {}, []);
-
-  // function randompicker(inputArray) {
-  //   if (inputArray.length === 0) {
-  //     return null;
-  //   }
-
-  //   const randomIndex = Math.floor(Math.random() * inputArray.length);
-  //   const randomNumber = inputArray[randomIndex];
-  //   inputArray.splice(randomIndex, 1);
-
-  //   for (let i = inputArray.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [inputArray[i], inputArray[j]] = [inputArray[j], inputArray[i]];
-  //   }
-
-  //   console.log("The random picker number is ", randomNumber);
-  //   return randomNumber;
-  // }
-
   function handleAllocation(e) {
     console.log("Elective timings in algorithm.jsx is ", electiveTimings);
     for (const j of sections) {

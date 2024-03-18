@@ -37,7 +37,7 @@ function App({
   const [issectionallotted, setissectionalloted] = useState(false);
   const [facultyarraytable, setfacultyarraytable] = useState([]);
   const [subjects, setsubjects] = useState(() => {
-    if (Branch === "BSH") {
+    if (Branch !== "BSH") {
       return { ...CollegeSubjects[Branch][Year] };
     } else {
       return { ...CollegeSubjects[Branch] };
