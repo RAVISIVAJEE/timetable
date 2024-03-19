@@ -5,7 +5,7 @@ import "./Header.css"; // Import CSS file for styling
 function Header({ selectedOption, setselectedOption }) {
   const timetableData = {
     BSH: {},
-    Branch: {},
+    BRANCH: {},
   };
   return (
     <header className="header">

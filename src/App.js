@@ -36,11 +36,12 @@ function App({
   const [isfacultyalloted, setisfacultyalloted] = useState(false);
   const [issectionallotted, setissectionalloted] = useState(false);
   const [facultyarraytable, setfacultyarraytable] = useState([]);
+  console.log("Bran is", Branch);
   const [subjects, setsubjects] = useState(() => {
-    if (Branch !== "BSH") {
+    if (Branch !== undefined) {
       return { ...CollegeSubjects[Branch][Year] };
     } else {
-      return { ...CollegeSubjects[Branch] };
+      return { ...CollegeSubjects["BSH"] };
     }
   });
 
@@ -143,6 +144,7 @@ function App({
           sections={sections}
           faculty={faculty}
           facultytimings={facultytimings}
+          setfacultytimings={setfacultytimings}
           sectiontimings={sectiontimings}
           setsectiontimings={setsectiontimings}
           setdisplayingtimetable={setdisplayingtimetable}

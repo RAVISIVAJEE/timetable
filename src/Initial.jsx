@@ -139,8 +139,24 @@ function Initial() {
     [CollegeSubjects, electiveTimings, CollegeTimings, facultytimings]
   );
 
+  useEffect(() => {
+    localStorage.setItem(
+      "facultytimings",
+      JSON.stringify(facultytimings, (key, value) => {
+        // Serialize functions to string
+        if (typeof value === "function") {
+          return value.toString();
+        }
+        return value;
+      })
+    );
+  }, [facultytimings]);
   useEffect(
     function () {
+      console.log(
+        "localStorage.setItem(CollegeTimings, JSON.stringify(CollegeTimings));",
+        JSON.stringify(CollegeTimings)
+      );
       localStorage.setItem("CollegeTimings", JSON.stringify(CollegeTimings));
       localStorage.setItem(
         "isOpenElectiveEntered",
@@ -148,7 +164,11 @@ function Initial() {
       );
       localStorage.setItem("CollegeSubjects", JSON.stringify(CollegeSubjects));
       localStorage.setItem("LowerTableData", JSON.stringify(LowerTableData));
-      localStorage.setItem("facultytimings", JSON.stringify(facultytimings));
+      // console.log(
+      //   "localStorage.setItem(facultytimings, JSON.stringify(facultytimings));",
+      //   JSON.stringify(facultytimings)
+      // );
+      // localStorage.setItem("facultytimings", JSON.stringify(facultytimings));
       localStorage.setItem("electiveTimings", JSON.stringify(electiveTimings));
     },
     [
@@ -242,7 +262,7 @@ function Initial() {
               }
             />
             <Route
-              path="Bsh"
+              path="BSH"
               element={
                 <Bsh
                   selectedOption={selectedOption}
@@ -260,7 +280,7 @@ function Initial() {
               }
             />
             <Route
-              path="Branch"
+              path="BRANCH"
               element={
                 <Branch
                   CollegeTimings={CollegeTimings}

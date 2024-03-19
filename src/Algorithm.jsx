@@ -1,12 +1,10 @@
 import React from "react";
 
-import { useEffect, useState } from "react";
-
 function Algorithm(subjects) {
   const courses = subjects["subjects"];
   let AvailbleTimings = {};
-  const isOpenElectiveEntered = subjects["isOpenElectiveEntered"];
-  const setisOpenElectiveEntered = subjects["setisOpenElectiveEntered"];
+  // const isOpenElectiveEntered = subjects["isOpenElectiveEntered"];
+  // const setisOpenElectiveEntered = subjects["setisOpenElectiveEntered"];
   const randompicker = subjects["randompicker"];
   const setcount = subjects["setcount"];
   const setsections = subjects["setsections"];
@@ -22,21 +20,23 @@ function Algorithm(subjects) {
   const sectiontimings = subjects["sectiontimings"];
   const setsectiontimings = subjects["setsectiontimings"];
   const facultytimings = subjects["facultytimings"];
+  const tempfactimings = { ...facultytimings };
+  const setfacultytimings = subjects["setfacultytimings"];
   const setCollegeTimings = subjects["setCollegeTimings"];
-  const CollegeSubjects = subjects["CollegeSubjects"];
-  const LowerTableData = subjects["LowerTableData"];
+  // const CollegeSubjects = subjects["CollegeSubjects"];
+  //const LowerTableData = subjects["LowerTableData"];
   const setCollegeSubjects = subjects["setCollegeSubjects"];
   const Branch = subjects["Branch"];
   const setBranch = subjects["setBranch"];
   const Year = subjects["Year"];
   const setYear = subjects["setYear"];
   const setdata = subjects["setdata"];
-  const CollegeTimings = subjects["CollegeTimings"];
+  //const CollegeTimings = subjects["CollegeTimings"];
   const selectedOption = subjects["selectedOption"];
   const electiveTimings = subjects["electiveTimings"];
-  const setelectiveTimings = subjects["setelectiveTimings"];
+  // const setelectiveTimings = subjects["setelectiveTimings"];
   const setissetbuttonClicked = subjects["setissetbuttonClicked"];
-  const setiselectivetabledisplayed = subjects["setiselectivetabledisplayed"];
+  //const setiselectivetabledisplayed = subjects["setiselectivetabledisplayed"];
 
   console.log("in Algorithm.jsx subjects are", subjects);
   //console.log("in Algorithm.jsx CollegeTimings are", CollegeTimings);
@@ -92,7 +92,10 @@ function Algorithm(subjects) {
               newArrayy["section"] = s;
               newArrayy["Branch"] = Branch;
               newArrayy["Year"] = Year;
-              facultytimings[facultyName].push(newArrayy);
+
+              tempfactimings[facultyName].push(newArrayy);
+              console.log("newArray2 is", [...newArrayy]);
+              console.log("tempfactimings is", tempfactimings);
               k = k + 1;
               let newArray = [];
               newArray.push(temp);
@@ -128,7 +131,10 @@ function Algorithm(subjects) {
               newArrayy["section"] = s;
               newArrayy["Branch"] = Branch;
               newArrayy["Year"] = Year;
-              facultytimings[facultyName].push(newArrayy);
+
+              tempfactimings[facultyName].push(newArrayy);
+              console.log("newArray2 is", [...newArrayy]);
+              console.log("tempfactimings is", tempfactimings);
               k = k + 1;
               let newArray = [];
               newArray.push(temp);
@@ -171,8 +177,9 @@ function Algorithm(subjects) {
 
                   console.log("Allocation of ", facultyArray[i][0]);
 
-                  facultytimings[facultyName].push(newArray2);
-
+                  tempfactimings[facultyName].push(newArray2);
+                  console.log("newArray2 is", [...newArray2]);
+                  console.log("tempfactimings is", tempfactimings);
                   let newArray = [];
                   newArray.push(temp);
                   newArray.push(facultyArray[i][0]);
@@ -227,7 +234,10 @@ function Algorithm(subjects) {
                   newArray2["section"] = s;
                   newArray2["Branch"] = Branch;
                   newArray2["Year"] = Year;
-                  facultytimings[facultyName].push(newArray2);
+
+                  tempfactimings[facultyName].push(newArray2);
+                  console.log("newArray2 is", [...newArray2]);
+                  console.log("tempfactimings is", tempfactimings);
                   k = k + 1;
 
                   let newArray = [];
@@ -253,8 +263,10 @@ function Algorithm(subjects) {
               newArray2["section"] = s;
               newArray2["Branch"] = Branch;
               newArray2["Year"] = Year;
-              facultytimings[facultyName].push(newArray2);
 
+              tempfactimings[facultyName].push(newArray2);
+              console.log("newArray2 is", [...newArray2]);
+              console.log("tempfactimings is", tempfactimings);
               let newArray = [];
               newArray.push(temp);
               newArray.push(facultyArray[i][0]);
@@ -272,7 +284,7 @@ function Algorithm(subjects) {
     console.log("Selected Option is", selectedOption["branch"]);
     if (selectedOption["branch"] === "BSH") {
       setCollegeTimings((prevtimings) => {
-        const temporary = prevtimings;
+        const temporary = { ...prevtimings };
         temporary["BSH"] = sectiontimings;
         return temporary;
       });
@@ -283,7 +295,7 @@ function Algorithm(subjects) {
       });
     } else {
       setCollegeTimings((prevTimings) => {
-        const TempTimings = prevTimings;
+        const TempTimings = { ...prevTimings };
         TempTimings[Branch][Year] = sectiontimings;
         return TempTimings;
       });
@@ -292,6 +304,10 @@ function Algorithm(subjects) {
         const tempSubjects = prevSubjects;
         tempSubjects[Branch][Year] = courses;
         return tempSubjects;
+      });
+      setfacultytimings((prevvalues) => {
+        prevvalues = { ...tempfactimings };
+        return prevvalues;
       });
     }
 
