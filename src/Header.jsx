@@ -7,6 +7,17 @@ function Header({ selectedOption, setselectedOption }) {
     BSH: {},
     BRANCH: {},
   };
+
+  const handleOptionClick = (branch) => {
+    try {
+      if (setselectedOption) {
+        setselectedOption({ branch });
+      }
+    } catch (error) {
+      console.error("Error occurred while setting selected option:", error);
+    }
+  };
+
   return (
     <header className="header">
       <nav>
@@ -24,7 +35,7 @@ function Header({ selectedOption, setselectedOption }) {
               {Object.keys(timetableData).map((branch) => (
                 <li key={branch}>
                   <NavLink to={`/${branch}`} activeClassName="active">
-                    <button onClick={(e) => setselectedOption({ branch })}>
+                    <button onClick={() => handleOptionClick(branch)}>
                       {branch}
                     </button>
                   </NavLink>
