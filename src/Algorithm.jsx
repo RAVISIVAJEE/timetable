@@ -52,17 +52,36 @@ function Algorithm(subjects) {
     1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
     6.2, 6.5,
   ];
+  if (Year !== "II") {
+    const minusoneOE = electiveTimings[Year]["OE"].map((ele) => {
+      nonlabtimings.push(parseFloat((ele - 0.1).toFixed(1)));
+    });
+    const minusonePE = electiveTimings[Year]["PE"].map((ele) => {
+      nonlabtimings.push(parseFloat((ele - 0.1).toFixed(1)));
+    });
+  }
 
   function handleAllocation(e) {
-    console.log("Elective timings in algorithm.jsx is ", electiveTimings);
-    for (const j of sections) {
-      AvailbleTimings[j] = Timings.filter(
-        (ele) =>
-          !electiveTimings[Year]["OE"].includes(ele) &&
-          !electiveTimings[Year]["PE"].includes(ele)
-      );
-      console.log("Availble timings after filter is ", AvailbleTimings[j]);
+    if (Year !== "II") {
+      console.log("Elective timings in algorithm.jsx is ", electiveTimings);
+
+      for (const j of sections) {
+        AvailbleTimings[j] = Timings.filter(
+          (ele) =>
+            !electiveTimings[Year]["OE"].includes(ele) &&
+            !electiveTimings[Year]["PE"].includes(ele)
+        );
+        console.log("Availble timings after filter is ", AvailbleTimings[j]);
+      }
     }
+
+    if (Year === "II") {
+      for (const j of sections) {
+        AvailbleTimings[j] = Timings;
+      }
+    }
+
+    console.log("non lab timings is ", nonlabtimings);
     console.log("The sections in Algorithm.jsx is", sections);
     console.log("The courses in Algorithm.jsx is", courses);
     console.log("The faculty in Algorithm.jsx is", faculty);
@@ -159,6 +178,7 @@ function Algorithm(subjects) {
             courses[facultyArray[i][0]][0] === 2
           ) {
             let p = 0;
+            console.log("Allocation of lab", facultyArray[i][0]);
             while (p < 1) {
               let temp = randompicker(AvailbleTimings[s]);
               if (!nonlabtimings.includes(temp)) {
@@ -175,7 +195,7 @@ function Algorithm(subjects) {
                   newArray2["Branch"] = Branch;
                   newArray2["Year"] = Year;
 
-                  console.log("Allocation of ", facultyArray[i][0]);
+                  console.log("Allocation of lab done ", facultyArray[i][0]);
 
                   tempfactimings[facultyName].push(newArray2);
                   console.log("newArray2 is", [...newArray2]);
@@ -186,13 +206,17 @@ function Algorithm(subjects) {
                   newArray.push(facultyName);
                   newArray.push(courses[facultyArray[i][0]][2]);
                   sectiontimings[s].push(newArray);
-                  temp = parseFloat(temp);
-                  temp = (temp + 0.1).toFixed(1);
+                  temp = parseFloat((temp + 0.1).toFixed(1));
                   z = z + 1;
                 }
-
+                console.log("temp is ", temp);
                 AvailbleTimings[s] = AvailbleTimings[s].filter(
-                  (el) => el !== parseFloat(temp + 0.1).toFixed(1)
+                  (el) => el !== parseFloat((temp - 0.1).toFixed(1))
+                );
+
+                console.log(
+                  "availbletimings after second lab rmoved is ",
+                  AvailbleTimings[s]
                 );
                 p = p + 1;
               }
@@ -203,12 +227,16 @@ function Algorithm(subjects) {
     }
     //for classes
     for (const s of sections) {
+      console.log("Entered into sections(classes)");
       for (const [facultyName, facultyArray] of Object.entries(faculty)) {
+        console.log("Entered into faculty(classes)");
         for (let i = 0; i < facultyArray.length; i++) {
+          console.log("facultyArray[i][1] === s", facultyArray[i][1]);
+          console.log("sections", s);
+
           if (
             facultyArray[i][1] === s &&
-            !facultyArray[i][2] === "OE" &&
-            !facultyArray[i][2] === "PE" &&
+            !facultyArray[i][2] &&
             courses[facultyArray[i][0]][0] === 1
           ) {
             if (

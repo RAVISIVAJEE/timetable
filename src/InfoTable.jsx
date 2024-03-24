@@ -10,8 +10,6 @@ function InfoTable(data) {
   const branch = data["branch"];
   const year = data["year"];
   const setLowerTableData = data["setLowerTableData"];
-  const branch1 = branch;
-  const year1 = year;
   const weeks = ["MON", "TUE", "WED", "THUR", "FRI", "SAT"];
   const Suffix = [".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9"];
   const correspondings = {
@@ -22,6 +20,7 @@ function InfoTable(data) {
     FRI: "5",
     SAT: "6",
   };
+
   if (!dataa || Object.keys(dataa).length === 0) {
     return <p>No data available</p>;
   }
@@ -29,28 +28,55 @@ function InfoTable(data) {
   const exportToExcel = () => {
     const wb = XLSX.utils.book_new(); // Create a new workbook
 
-    // Convert info table to worksheet
-    const wsInfoTable = XLSX.utils.table_to_sheet(
-      document.getElementById("table")
-    );
-    XLSX.utils.book_append_sheet(wb, wsInfoTable, "Info Table"); // Append info table to workbook
+    Object.entries(dataa).forEach(([section, sectionData]) => {
+      // Create a single sheet for each section
+      const ws = XLSX.utils.table_to_sheet(
+        document.getElementById(`table-${section}`)
+      );
+      const lowerTable = document.getElementById(`lowertable-${section}`);
 
-    // Convert second table to worksheet
-    const wsSecondTable = XLSX.utils.table_to_sheet(
-      document.getElementById("lowertable")
-    );
-    XLSX.utils.book_append_sheet(wb, wsSecondTable, "Second Table"); // Append second table to workbook
+      // Get the section table's column count for alignment
+      const sectionTableColumnCount = ws["!ref"]
+        .split(":")[1]
+        .replace(/\D/g, "");
 
-    // Write workbook to file
-    XLSX.writeFile(wb, "info_and_second_table.xlsx");
+      // Extract lower table data as an array of arrays
+      const lowerTableData = Array.from(lowerTable.querySelectorAll("tr")).map(
+        (row) =>
+          Array.from(row.querySelectorAll("td")).map((cell) => cell.innerText)
+      );
+
+      // Adjust lower table data if column counts differ
+      if (sectionTableColumnCount !== lowerTableData[0].length) {
+        lowerTableData.forEach((row) => {
+          if (row.length < sectionTableColumnCount) {
+            row.push(...Array(sectionTableColumnCount - row.length).fill("")); // Add empty cells
+          } else if (row.length > sectionTableColumnCount) {
+            row.splice(sectionTableColumnCount); // Remove extra cells
+          }
+        });
+      }
+
+      // Append lower table data to the section table sheet
+      lowerTableData.forEach((row, rowIndex) => {
+        const newRow = ws["!ref"].split(":")[1].slice(-1) * 1 + rowIndex + 1; // Calculate new row index
+        ws[`A${newRow}`] = { v: row[0] }; // Set first cell value
+        for (let colIndex = 1; colIndex < row.length; colIndex++) {
+          ws[`B${colIndex}${newRow}`] = { v: row[colIndex] }; // Set remaining cell values
+        }
+      });
+
+      XLSX.utils.book_append_sheet(wb, ws, section);
+    });
+
+    XLSX.writeFile(wb, "time_tables.xlsx");
   };
 
-  console.log("Entered into INFO table", data);
   return (
     <>
       <Header />
-      <div id="table">
-        {Object.entries(dataa).map((timings, index) => (
+      <div>
+        {Object.entries(dataa).map(([section, sectionData]) => (
           <>
             <section>
               <h3>CLASS TIME TABLE</h3>
@@ -59,9 +85,9 @@ function InfoTable(data) {
               <br />
               <label>Academic Year :2023-24</label>
               <br />
-              <label>Section :{timings[0]}</label>
+              <label>Section :{section}</label>
             </section>
-            <table key={index} border="1">
+            <table id={`table-${section}`} key={section} border="1">
               <thead>
                 <tr>
                   <th>Timing</th>
@@ -95,10 +121,9 @@ function InfoTable(data) {
                           </td>
                         );
                       } else {
-                        const filteredData = dataa[timings[0]].filter(
+                        const filteredData = sectionData.filter(
                           (element) => suffixValue === element[0].toString()
                         );
-                        console.log("Filterddata is ", filteredData);
                         return filteredData.length > 0 ? (
                           <td key={el}>{filteredData[0][3]}</td>
                         ) : (
@@ -110,14 +135,12 @@ function InfoTable(data) {
                 ))}
               </tbody>
             </table>
-
-            {console.log("Lower table data in Info table", LowerTableData)}
             <LowerTable
-              Branch={branch1}
-              Year={year1}
+              Branch={branch}
+              Year={year}
               LowerTableData={LowerTableData}
-              setLowerTableData={LowerTableData}
-              section={timings[0]}
+              setLowerTableData={setLowerTableData}
+              section={section}
               selectedOption={selectedOption}
               setselectedOption={setselectedOption}
             />
