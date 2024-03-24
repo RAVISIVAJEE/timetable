@@ -4,6 +4,12 @@ import Header from "./Header";
 import ElectiveTable from "./ElectiveTable";
 function Branch({
   randompicker,
+  electiveTableData,
+  setelectiveTableData,
+  data,
+  setdata,
+  iselectivetabledisplayed,
+  setiselectivetabledisplayed,
   CollegeTimings,
   setCollegeTimings,
   facultytimings,
@@ -23,7 +29,7 @@ function Branch({
   const Years = ["II", "III", "IV"];
   const [Branch, setBranch] = useState("");
   const [Year, setYear] = useState("");
-  const [data, setdata] = useState(false);
+  // const [data, setdata] = useState(false);
   const [electiveName, setelectiveName] = useState("");
   const [electiveNameCode, setelectiveNameCode] = useState("");
   const [electiveDuration, setelectiveDuration] = useState(null);
@@ -31,13 +37,28 @@ function Branch({
   const [electiveBranch, setelectiveBranch] = useState("");
   const [electivetype, setelectivetype] = useState("");
   const [electiveYear, setelectiveYear] = useState("");
-  const [electiveTableData, setelectiveTableData] = useState([]);
-  const [iselectivetabledisplayed, setiselectivetabledisplayed] =
-    useState(false);
+  // const [electiveTableData, setelectiveTableData] = useState([]);
+  // const [iselectivetabledisplayed, setiselectivetabledisplayed] =
+  //   useState(false);
   const [issetbuttonClicked, setissetbuttonClicked] = useState(false);
   console.log("in Branch.jsx CollegeTimings are", CollegeTimings);
   console.log("in Branch.jsx setCollegeTimings are", setCollegeTimings);
-
+  useEffect(
+    function () {
+      console.log("Year is ", Year);
+      console.log("issetbuttonClicked", issetbuttonClicked);
+      console.log("iselectivetabledisplayed ", iselectivetabledisplayed);
+      console.log("data is ", data);
+      console.log("isOpenElectiveEntered", isOpenElectiveEntered);
+    },
+    [
+      Year,
+      issetbuttonClicked,
+      iselectivetabledisplayed,
+      data,
+      isOpenElectiveEntered,
+    ]
+  );
   useEffect(
     function () {
       console.log("elective table data in Branch.jsx is", electiveTableData);
@@ -90,11 +111,7 @@ function Branch({
   function handleSetdata(e) {
     e.preventDefault();
     setissetbuttonClicked(true);
-    console.log("Year is ", Year);
-    console.log("issetbuttonClicked", issetbuttonClicked);
-    console.log("iselectivetabledisplayed ", iselectivetabledisplayed);
-    console.log("data is ", data);
-    console.log("isOpenElectiveEntered", isOpenElectiveEntered);
+
     if (Year === "II") {
       setdata(true);
     }

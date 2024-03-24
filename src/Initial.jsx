@@ -12,6 +12,10 @@ import BshTimeTable from "./BshTimeTable";
 import FacultyTimeTable from "./FacultyTimeTable";
 function Initial() {
   const [selectedOption, setselectedOption] = useState("");
+  const [data, setdata] = useState(false);
+  const [iselectivetabledisplayed, setiselectivetabledisplayed] =
+    useState(false);
+  const [electiveTableData, setelectiveTableData] = useState([]);
   const [isOpenElectiveEntered, setisOpenElectiveEntered] = useState(false);
   const [CollegeTimings, setCollegeTimings] = useState({
     BSH: {},
@@ -284,6 +288,10 @@ function Initial() {
               element={
                 <Branch
                   CollegeTimings={CollegeTimings}
+                  data={data}
+                  setdata={setdata}
+                  iselectivetabledisplayed={iselectivetabledisplayed}
+                  setiselectivetabledisplayed={setiselectivetabledisplayed}
                   setCollegeTimings={setCollegeTimings}
                   CollegeSubjects={CollegeSubjects}
                   setCollegeSubjects={setCollegeSubjects}
@@ -298,6 +306,8 @@ function Initial() {
                   electiveTimings={electiveTimings}
                   setelectiveTimings={setelectiveTimings}
                   randompicker={randompicker}
+                  electiveTableData={electiveTableData}
+                  setelectiveTableData={setelectiveTableData}
                 />
               }
             />
