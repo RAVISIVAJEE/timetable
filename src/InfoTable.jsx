@@ -29,46 +29,51 @@ function InfoTable(data) {
     const wb = XLSX.utils.book_new(); // Create a new workbook
 
     Object.entries(dataa).forEach(([section, sectionData]) => {
-      // Create a single sheet for each section
-      const ws = XLSX.utils.table_to_sheet(
-        document.getElementById(`table-${section}`)
+      const ws = XLSX.utils.aoa_to_sheet([]); // Create a new worksheet
+
+      // Collect section data
+      const sectionDataArray = [];
+      const tableElement = document.getElementById(`table-${section}`);
+      if (!tableElement) {
+        console.error(`Main table element not found for section: ${section}`);
+        return; // Skip processing this section
+      }
+      const tableRows = tableElement.querySelectorAll("tr");
+      tableRows.forEach((row) => {
+        const rowData = [];
+        row.querySelectorAll("th, td").forEach((cell) => {
+          rowData.push(cell.textContent);
+        });
+        sectionDataArray.push(rowData);
+      });
+
+      // Collect lower table data
+      const lowerTableDataArray = [];
+      const lowerTableElement = document.getElementById(
+        `lowertable-${section}`
       );
-      const lowerTable = document.getElementById(`lowertable-${section}`);
-
-      // Get the section table's column count for alignment
-      const sectionTableColumnCount = ws["!ref"]
-        .split(":")[1]
-        .replace(/\D/g, "");
-
-      // Extract lower table data as an array of arrays
-      const lowerTableData = Array.from(lowerTable.querySelectorAll("tr")).map(
-        (row) =>
-          Array.from(row.querySelectorAll("td")).map((cell) => cell.innerText)
-      );
-
-      // Adjust lower table data if column counts differ
-      if (sectionTableColumnCount !== lowerTableData[0].length) {
-        lowerTableData.forEach((row) => {
-          if (row.length < sectionTableColumnCount) {
-            row.push(...Array(sectionTableColumnCount - row.length).fill("")); // Add empty cells
-          } else if (row.length > sectionTableColumnCount) {
-            row.splice(sectionTableColumnCount); // Remove extra cells
-          }
+      if (lowerTableElement) {
+        const lowerTableRows = lowerTableElement.querySelectorAll("tr");
+        lowerTableRows.forEach((row) => {
+          const rowData = [];
+          row.querySelectorAll("th, td").forEach((cell) => {
+            rowData.push(cell.textContent);
+          });
+          lowerTableDataArray.push(rowData);
         });
       }
 
-      // Append lower table data to the section table sheet
-      lowerTableData.forEach((row, rowIndex) => {
-        const newRow = ws["!ref"].split(":")[1].slice(-1) * 1 + rowIndex + 1; // Calculate new row index
-        ws[`A${newRow}`] = { v: row[0] }; // Set first cell value
-        for (let colIndex = 1; colIndex < row.length; colIndex++) {
-          ws[`B${colIndex}${newRow}`] = { v: row[colIndex] }; // Set remaining cell values
-        }
-      });
+      // Combine section data and lower table data
+      const combinedData = [...sectionDataArray, ...lowerTableDataArray];
+      console.log("combined data", combinedData);
+      // Add combined data to the worksheet
+      XLSX.utils.sheet_add_aoa(ws, combinedData, { origin: "A1" });
 
+      // Append the worksheet to the workbook
       XLSX.utils.book_append_sheet(wb, ws, section);
     });
 
+    // Write the workbook to a file
     XLSX.writeFile(wb, "time_tables.xlsx");
   };
 
@@ -77,7 +82,7 @@ function InfoTable(data) {
       <Header />
       <div>
         {Object.entries(dataa).map(([section, sectionData]) => (
-          <>
+          <div className={`table-${section}`}>
             <section>
               <h3>CLASS TIME TABLE</h3>
               <br />
@@ -144,7 +149,7 @@ function InfoTable(data) {
               selectedOption={selectedOption}
               setselectedOption={setselectedOption}
             />
-          </>
+          </div>
         ))}
       </div>
       <button onClick={exportToExcel}>Export to Excel</button>
