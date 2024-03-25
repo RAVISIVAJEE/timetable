@@ -1,67 +1,12 @@
-/* Base styles */
-.Homepage {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  padding: 50px;
-  background-color: #f9f9f9;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
-    ),
-    url("https://source.unsplash.com/random/1920x1080");
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
+.hidden {
+  opacity: 0;
+  transform: translateY(
+    20px
+  ); /* Move the section slightly down to give a smooth appearance */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Apply transition effect for smooth appearance */
 }
 
-.innerhomepage {
-  margin-top: 20px;
-}
-
-.label {
-  margin-right: 10px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-NavLink {
-  display: inline-block;
-  margin-top: 20px;
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-NavLink:hover {
-  color: #004286;
-}
-
-/* Responsive styles */
-@media only screen and (max-width: 768px) {
-  .Homepage {
-    padding: 30px;
-  }
-
-  .label {
-    margin-right: 5px;
-  }
-
-  button {
-    padding: 8px 16px;
-    margin-top: 15px;
-  }
+.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
