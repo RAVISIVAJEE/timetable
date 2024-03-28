@@ -11,6 +11,7 @@ function Bsh({
   setselectedOption,
   LowerTableData,
   setLowerTableData,
+  randompicker,
 }) {
   return (
     <div>
@@ -26,6 +27,8 @@ function Bsh({
         setselectedOption={setselectedOption}
         LowerTableData={LowerTableData}
         setLowerTableData={setLowerTableData}
+        randompicker={randompicker}
+        Year="BSH"
       />
     </div>
   );

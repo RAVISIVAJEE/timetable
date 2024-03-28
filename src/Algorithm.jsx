@@ -52,7 +52,9 @@ function Algorithm(subjects) {
     1.2, 1.5, 1.9, 2.2, 2.5, 2.9, 3.2, 3.5, 3.9, 4.2, 4.5, 4.9, 5.2, 5.5, 5.9,
     6.2, 6.5,
   ];
-  if (Year !== "II") {
+
+  console.log("The Yearvalue for BSH error is ", Year);
+  if (Year === "III" || Year === "IV") {
     const minusoneOE = electiveTimings[Year]["OE"].map((ele) => {
       nonlabtimings.push(parseFloat((ele - 0.1).toFixed(1)));
     });
@@ -62,7 +64,7 @@ function Algorithm(subjects) {
   }
 
   function handleAllocation(e) {
-    if (Year !== "II") {
+    if (Year === "III" || Year === "IV") {
       console.log("Elective timings in algorithm.jsx is ", electiveTimings);
 
       for (const j of sections) {
@@ -75,7 +77,7 @@ function Algorithm(subjects) {
       }
     }
 
-    if (Year === "II") {
+    if (Year === "BSH" || Year === "II") {
       for (const j of sections) {
         AvailbleTimings[j] = Timings;
       }

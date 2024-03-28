@@ -10,9 +10,14 @@ function Header({ selectedOption, setselectedOption }) {
 
   const handleOptionClick = (branch) => {
     try {
+      console.log(
+        "setselected option for handling error is ",
+        setselectedOption
+      );
       if (setselectedOption) {
         setselectedOption({ branch });
       }
+      console.log("In header selected option is ", selectedOption);
     } catch (error) {
       console.error("Error occurred while setting selected option:", error);
     }
