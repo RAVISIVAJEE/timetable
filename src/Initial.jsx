@@ -224,6 +224,16 @@ function Initial() {
                 <DeleteData
                   isOpenElectiveEntered={isOpenElectiveEntered}
                   setisOpenElectiveEntered={setisOpenElectiveEntered}
+                  setCollegeTimings={setCollegeTimings}
+                  CollegeTimings={CollegeTimings}
+                  setCollegeSubjects={setCollegeSubjects}
+                  CollegeSubjects={CollegeSubjects}
+                  setLowerTableData={setLowerTableData}
+                  LowerTableData={LowerTableData}
+                  setfacultytimings={setfacultytimings}
+                  facultytimings={facultytimings}
+                  setelectiveTimings={setelectiveTimings}
+                  electiveTimings={electiveTimings}
                 />
               }
             />

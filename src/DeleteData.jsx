@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import Header from "./Header";
 
-const DeleteData = ({ isOpenElectiveEntered, setisOpenElectiveEntered }) => {
+const DeleteData = ({
+  isOpenElectiveEntered,
+  setisOpenElectiveEntered,
+  setCollegeTimings,
+  setCollegeSubjects,
+  setLowerTableData,
+  setfacultytimings,
+  setelectiveTimings,
+}) => {
   const [isDataDeleted, setIsDataDeleted] = useState(false);
 
   const handleDeleteData = () => {
@@ -9,7 +17,73 @@ const DeleteData = ({ isOpenElectiveEntered, setisOpenElectiveEntered }) => {
       "Are you sure you want to delete all data?"
     );
     if (confirmDelete) {
-      localStorage.removeItem("myAppData");
+      localStorage.setItem("CollegeTimings", {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+      setCollegeTimings({
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+
+      localStorage.setItem("CollegeSubjects", {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+      setCollegeSubjects({
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+      localStorage.setItem("LowerTableData", {
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+      setLowerTableData({
+        BSH: {},
+        CSE: { II: {}, III: {}, IV: {} },
+        ECE: { II: {}, III: {}, IV: {} },
+        IT: { II: {}, III: {}, IV: {} },
+        EEE: { II: {}, III: {}, IV: {} },
+        MECH: { II: {}, III: {}, IV: {} },
+        CIVIL: { II: {}, III: {}, IV: {} },
+      });
+
+      localStorage.setItem("facultytimings", {});
+      setfacultytimings({});
+      localStorage.setItem("electiveTimings", {
+        III: { OE: [], PE: [] },
+        IV: { OE: [], PE: [] },
+      });
+      setelectiveTimings({
+        III: { OE: [], PE: [] },
+        IV: { OE: [], PE: [] },
+      });
+      localStorage.setItem("isOpenElectiveEntered", false);
       setisOpenElectiveEntered(false);
       setIsDataDeleted(true);
     }
